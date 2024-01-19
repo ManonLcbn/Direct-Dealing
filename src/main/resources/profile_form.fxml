@@ -1,0 +1,90 @@
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:controller="eu.telecomnancy.test.ProfileController"
+    xmlns:fx="http://javafx.com/fxml" alignment="center"
+          hgap="10" vgap="10">
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints minWidth="100" prefWidth="100"
+                           maxWidth="Infinity" halignment="RIGHT"></ColumnConstraints>
+        <ColumnConstraints minWidth="200" prefWidth="200"
+                           maxWidth="Infinity" hgrow="ALWAYS"></ColumnConstraints>
+    </columnConstraints>
+    <!-- Add Header Label -->
+    <Label fx:id="titleLabel" text="Compte utilisateur" GridPane.columnIndex="0" 
+           GridPane.rowIndex="0" GridPane.columnSpan="2" 
+           GridPane.rowSpan="1" GridPane.halignment="CENTER" >
+        <font>
+            <Font name="Arial" size="24" ></Font>
+        </font>
+        <GridPane.margin>
+            <Insets top="10" right="0" bottom="20" left="0"></Insets>
+        </GridPane.margin>
+    </Label>
+    <!-- Add Name Label -->
+    <Label text="Nom : " GridPane.columnIndex="0" 
+           GridPane.rowIndex="2" ></Label>
+    <!-- Add Name Text Field -->
+    <TextField fx:id="nameIdField" prefHeight="40"
+               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <!-- Add Email Label -->
+    <Label text="Email : " GridPane.columnIndex="0" 
+           GridPane.rowIndex="3" ></Label>
+    <!-- Add Email Text Field -->
+    <TextField fx:id="emailIdField" prefHeight="40" 
+               GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <!-- Add Password Label -->
+    <Label text="Mot de passe : " GridPane.columnIndex="0" 
+           GridPane.rowIndex="4" ></Label>
+    <!-- Add Password Field -->
+    <PasswordField fx:id="passwordField" prefHeight="40" 
+                   GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <!-- Add Credit Label -->
+    <Label text="Florain : " GridPane.columnIndex="0" 
+           GridPane.rowIndex="5" ></Label>
+    <!-- Add Credit Field -->
+    <Label fx:id="famountField" prefHeight="40" 
+                   GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <!-- Add profile pending Field -->
+    <CheckBox fx:id="isDisableCheckbox" mnemonicParsing="false" text="Suspendre temporairement vos activités" 
+                   GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                   
+    <!-- Add Availability Label -->
+    <Label text="Disponibilité : " GridPane.columnIndex="0" 
+           GridPane.rowIndex="7" ></Label>
+    <VBox fx:id="monthCheckboxes" spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="7">
+		<HBox spacing="5" alignment="bottom_left" >
+		    <CheckBox id="cbMonth1" fx:id="cbMonth1" text="Jan" />
+		    <CheckBox id="cbMonth2" fx:id="cbMonth2" text="Fev" />
+		    <CheckBox id="cbMonth3" fx:id="cbMonth3" text="Mar" />
+		    <CheckBox id="cbMonth4" fx:id="cbMonth4" text="Avr" />
+		    <CheckBox id="cbMonth5" fx:id="cbMonth5" text="Mai" />
+		    <CheckBox id="cbMonth6" fx:id="cbMonth6" text="Jun" />
+		</HBox> 
+		<HBox spacing="5" alignment="bottom_left" >
+		    <CheckBox id="cbMonth7" fx:id="cbMonth7" text="Jul" />
+		    <CheckBox id="cbMonth8" fx:id="cbMonth8" text="Aou" />
+		    <CheckBox id="cbMonth9" fx:id="cbMonth9" text="Sep" />
+		    <CheckBox id="cbMonth10" fx:id="cbMonth10" text="Oct" />
+		    <CheckBox id="cbMonth11" fx:id="cbMonth11" text="Nov" />
+		    <CheckBox id="cbMonth12" fx:id="cbMonth12" text="Dec" />
+		</HBox>
+	</VBox>
+	<!-- Add Register Button -->
+    <Button fx:id="registerButton" text="Enregistrer"
+            prefWidth="100" prefHeight="40" defaultButton="true"
+            GridPane.columnIndex="0" GridPane.rowIndex="8"
+            GridPane.columnSpan="2" GridPane.rowSpan="1"
+            GridPane.halignment="CENTER"
+            onAction="#register">
+        <GridPane.margin>
+            <Insets top="20" right="0" bottom="20" left="0"></Insets>
+        </GridPane.margin>
+    </Button>
+</GridPane>

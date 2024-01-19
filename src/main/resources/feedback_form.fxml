@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Button?>
+
+<GridPane alignment="center" hgap="10" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.test.FeedbackController">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="200" prefWidth="200" />
+    </columnConstraints>
+   <children>
+       <!-- Add Email Label -->
+       <Label text="Note sur 5:" GridPane.rowIndex="1" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+         <children>
+             <!-- Add Confirm Button -->
+             <Button fx:id="confirmButton" defaultButton="true" onAction="#confirm" prefWidth="100" text="Confirmer" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" prefWidth="100.0" text="Annuler" />
+         </children>
+      </HBox>
+      <TextArea fx:id="comments" prefHeight="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+      <Label text="Avis:" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+      <ChoiceBox fx:id="note" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   </children>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints minHeight="-Infinity" />
+      <RowConstraints maxHeight="-Infinity" minHeight="50.0" prefHeight="30.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+    
+</GridPane>
