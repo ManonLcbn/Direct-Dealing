@@ -53,7 +53,7 @@ public class JdbcAdRow {
 
     public List<AdRow> selectByKeywords(String keywordLine) throws SQLException {
 
-        List<String> keywords = Arrays.asList(keywordLine.split(";", -1));
+        List<String> keywords = Arrays.asList(keywordLine.split(" ", -1));
         List<AdRow> rows = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL)) {

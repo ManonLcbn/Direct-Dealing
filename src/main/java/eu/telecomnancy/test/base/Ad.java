@@ -2,11 +2,8 @@ package eu.telecomnancy.test.base;
 
 import java.time.*;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
+import javafx.scene.image.Image;
 
 public class Ad {
 	
@@ -23,7 +20,7 @@ public class Ad {
 	
 	private SimpleStringProperty localization;
 	private SimpleStringProperty comments;
-	
+	private String picture;
     private ObjectProperty<LocalDate> startDate;
 
 	private SimpleIntegerProperty durationInDay;
@@ -214,10 +211,14 @@ public class Ad {
 	public final void setStartDate(final LocalDate startDate) {
 		this.startDateProperty().set(startDate);
 	}
+
+	public final String getPicture() {return picture;}
+
+	public final void setPicture(final String picture) {this.picture = picture;}
 	
 	public Ad( int id, int uId, boolean isMaterial, boolean isRequest, String title, int cost,
 			String description, int categoryId, boolean isAvailable, String localization, String comments,
-			LocalDate startDate, int duration, boolean isRepetitive, LocalDate endDate )
+			LocalDate startDate, int duration, boolean isRepetitive, LocalDate endDate, String picture )
 	{
 		this.id = id;
 		this.userId = uId;
@@ -234,11 +235,11 @@ public class Ad {
 		this.durationInDay = new SimpleIntegerProperty(this, "durationInDay", duration);
 		this.isRepetitive = new SimpleBooleanProperty(this, "isRepetitive", isRepetitive);
 		this.endDate = new SimpleObjectProperty<>(this, "endDate", endDate);
+		this.picture = picture;
 	}
 	
 	public Ad( int uId, boolean isMaterial )
 	{
-		this(0,uId,isMaterial,false,"",0,"",0,true,"","",LocalDate.now(),1,false, null);
+		this(0,uId,isMaterial,false,"",0,"",0,true,"","",LocalDate.now(),1,false, null, "DefaultPicture.jpg");
 	}
-
 }

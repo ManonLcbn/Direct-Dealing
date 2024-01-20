@@ -1,6 +1,11 @@
 package eu.telecomnancy.test;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -22,13 +27,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
+import static eu.telecomnancy.test.DAO.JdbcAd.maxID;
+
 public class MaterialController {
 
+	private static final String RESOURCE_FOLDER = "images/";
 	private Ad ad = null;
 	private boolean isNewAd;
 	private int currentUserId;
@@ -50,7 +61,8 @@ public class MaterialController {
 	private ComboBox<MatCat> categories;
 	@FXML
 	private CheckBox isAvailable;
-	
+	@FXML
+	private ImageView productImage;
 	@FXML
 	private TextField zipcodeField;
 	@FXML
@@ -61,6 +73,7 @@ public class MaterialController {
 	private DatePicker enddateField;
 	@FXML
 	private TextField durationField;
+	private String picture;
 	@FXML
 	private ToggleGroup type1;
 	@FXML
@@ -69,7 +82,7 @@ public class MaterialController {
 
 
 	@FXML
-    private Button addButton, delButton, orderButton, commentButton;
+    private Button addButton, delButton, orderButton, commentButton, addImageButton;
 	
     @FXML
     public void commentAd(ActionEvent event) throws IOException {
@@ -160,6 +173,47 @@ public class MaterialController {
     	owner.hide();
     }
 
+	@FXML
+	public void addImage(ActionEvent event) throws SQLException {
+		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Images (*.png, *.jpg, *.jpeg)", "*.png", "*.jpg", "*.jpeg");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		// Afficher la boîte de dialogue de sélection de fichier
+		File selectedFile = fileChooser.showOpenDialog(null);
+
+		if (selectedFile != null) {
+			// Charger l'image sélectionnée dans l'ImageView
+			copyImageToResources(selectedFile, RESOURCE_FOLDER, selectedFile.getName());
+			Image image = new Image(selectedFile.toURI().toString());
+			productImage.setImage(image);
+		}
+	}
+
+	public void copyImageToResources(File sourceImage, String resourcesDirectory, String newImageName) {
+		// Obtenez le chemin vers votre répertoire de ressources
+		String resourcesPath = "src/main/resources/" + resourcesDirectory; // Chemin vers votre répertoire de ressources
+
+
+		try {
+			// Créez le répertoire s'il n'existe pas
+			Files.createDirectories(Paths.get(resourcesPath));
+			// Copiez l'image vers le répertoire de ressources
+			try {
+				newImageName = (maxID()+1) + ".jpg";
+				ad.setPicture(newImageName);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			Path destinationPath = Paths.get(resourcesPath, newImageName);
+			Files.copy(sourceImage.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
     public void initPage( int userId, int adId, AppController appController ) throws SQLException {
 
     	this.currentUserId = userId;
@@ -228,6 +282,11 @@ public class MaterialController {
     	Bindings.bindBidirectional(durationField.textProperty(), ad.durationInDayProperty(), new NumberStringConverter());
     	Bindings.bindBidirectional(startdateField.valueProperty(), ad.startDateProperty());
     	Bindings.bindBidirectional(enddateField.valueProperty(), ad.endDateProperty());
+
+		// Affiche l'image associee a l'annonce
+		String path = RESOURCE_FOLDER + ad.getPicture();
+		File file = new File(path);
+		productImage.setImage(new Image(file.toURI().toString()));
 
     	// Mise � jour de l'etat des boutons
     	if( userId != ad.getUserId() ) {
