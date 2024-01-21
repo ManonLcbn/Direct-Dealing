@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.JOptionPane;
 
@@ -200,10 +201,17 @@ public class MaterialController {
 			Files.createDirectories(Paths.get(resourcesPath));
 			// Copiez l'image vers le répertoire de ressources
 			try {
-				newImageName = (maxID()+1) + ".jpg";
+				if (ad.getPicture().equals("DefaultPicture.jpg")) {
+					newImageName = ad.getId() + ".jpg";
+					ad.setPicture(newImageName);
+				}
+				else {
+					newImageName = ad.getPicture();
+				}
+
+			} catch (NullPointerException e) {
+				newImageName = ad.getId() + ".jpg";
 				ad.setPicture(newImageName);
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 			Path destinationPath = Paths.get(resourcesPath, newImageName);
 			Files.copy(sourceImage.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
@@ -285,13 +293,33 @@ public class MaterialController {
 
 		// Affiche l'image associee a l'annonce
 		String path = RESOURCE_FOLDER + ad.getPicture();
-		File file = new File(path);
-		productImage.setImage(new Image(file.toURI().toString()));
+		System.out.println(path);
+		productImage.setImage(new Image(new File(path).toURI().toString()));
+		if (productImage.getImage() == null) {
+			System.out.println("Image non trouvée");
+		}
+		else {
+			System.out.println(productImage.getImage().toString());
+		}
 
     	// Mise � jour de l'etat des boutons
     	if( userId != ad.getUserId() ) {
-    		addButton.setDisable( true );
+			// L'utilisateur n'est pas le proprietaire de l'annonce
+    		addButton.setVisible( false );
     		orderButton.setDisable( false );
+			commentButton.setDisable( false );
+			addImageButton.setVisible(false);
+			delButton.setVisible(false);
+			nameIdField.setDisable(true);
+			descriptionIdField.setDisable(true);
+			costIdField.setDisable(true);
+			categories.setDisable(true);
+			isAvailable.setDisable(true);
+			zipcodeField.setDisable(true);
+			commentsField.setDisable(true);
+			durationField.setDisable(true);
+			startdateField.setDisable(true);
+			enddateField.setDisable(true);
     	}
     	else if( !this.isNewAd ) {
 			addButton.setText( "Modifier" );

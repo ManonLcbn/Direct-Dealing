@@ -45,9 +45,9 @@
        <ComboBox fx:id="categories" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="422.0" promptText="Sélectionnez une catégorie" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
        <!-- Add Description Label -->
        <Label text="Description :" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-       <TextArea fx:id="descriptionIdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" promptText="Brève description de l'appareil" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="5" />
+       <TextArea fx:id="descriptionIdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="350.0" promptText="Brève description de l'appareil" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="5" />
       <Button fx:id="addImageButton" mnemonicParsing="false" onAction="#addImage" text="Ajouter une image" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-      <ImageView fx:id="productImage" fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+      <ImageView fx:id="productImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="5" />
        <!-- Add available checkbox -->
        <CheckBox fx:id="isAvailable" mnemonicParsing="false" text="Matériel disponible" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
        <!-- Add localization TextField with label -->
@@ -120,7 +120,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" />
       <RowConstraints />
       <RowConstraints />
-      <RowConstraints maxHeight="150.0" minHeight="-Infinity" />
+      <RowConstraints maxHeight="200.0" minHeight="-Infinity" prefHeight="150.0" />
       <RowConstraints maxHeight="116.0" minHeight="-Infinity" />
       <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" />
       <RowConstraints maxHeight="46.0" minHeight="-Infinity" />
