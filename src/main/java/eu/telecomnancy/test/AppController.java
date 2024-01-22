@@ -87,7 +87,7 @@ public class AppController {
         		Title += " - Material";
         	}
         	else {
-        		page = new ServiceView();
+        		page = new ServicePonctualView();
         		Title += " - Service";
         	}
         	
