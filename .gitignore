@@ -6,7 +6,9 @@ build.gradle
 gradlew
 gradlew.bat
 settings.gradle
-.bin
-.lock
-.probe
-.class
+*.bin
+*.lock
+*.probe
+*.class
+*.DS_Store
+*.properties

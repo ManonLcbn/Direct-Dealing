@@ -292,7 +292,7 @@ public class MaterialController {
     	Bindings.bindBidirectional(enddateField.valueProperty(), ad.endDateProperty());
 
 		// Affiche l'image associee a l'annonce
-		String path = RESOURCE_FOLDER + ad.getPicture();
+		String path = "src/main/resources/" + RESOURCE_FOLDER + ad.getPicture();
 		System.out.println(path);
 		productImage.setImage(new Image(new File(path).toURI().toString()));
 		if (productImage.getImage() == null) {
