@@ -6,3 +6,7 @@ build.gradle
 gradlew
 gradlew.bat
 settings.gradle
+.bin
+.lock
+.probe
+.class

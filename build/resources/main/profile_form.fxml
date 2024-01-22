@@ -60,20 +60,15 @@
            GridPane.rowIndex="7" ></Label>
     <VBox fx:id="monthCheckboxes" spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="7">
 		<HBox spacing="5" alignment="bottom_left" >
-		    <CheckBox id="cbMonth1" fx:id="cbMonth1" text="Jan" />
-		    <CheckBox id="cbMonth2" fx:id="cbMonth2" text="Fev" />
-		    <CheckBox id="cbMonth3" fx:id="cbMonth3" text="Mar" />
-		    <CheckBox id="cbMonth4" fx:id="cbMonth4" text="Avr" />
-		    <CheckBox id="cbMonth5" fx:id="cbMonth5" text="Mai" />
-		    <CheckBox id="cbMonth6" fx:id="cbMonth6" text="Jun" />
+		    <CheckBox id="cbMonth1" fx:id="cbMonth1" text="Lundi" />
+		    <CheckBox id="cbMonth2" fx:id="cbMonth2" text="Mardi" />
+		    <CheckBox id="cbMonth3" fx:id="cbMonth3" text="Mercredi" />
+		    <CheckBox id="cbMonth4" fx:id="cbMonth4" text="Jeudi" />
 		</HBox> 
 		<HBox spacing="5" alignment="bottom_left" >
-		    <CheckBox id="cbMonth7" fx:id="cbMonth7" text="Jul" />
-		    <CheckBox id="cbMonth8" fx:id="cbMonth8" text="Aou" />
-		    <CheckBox id="cbMonth9" fx:id="cbMonth9" text="Sep" />
-		    <CheckBox id="cbMonth10" fx:id="cbMonth10" text="Oct" />
-		    <CheckBox id="cbMonth11" fx:id="cbMonth11" text="Nov" />
-		    <CheckBox id="cbMonth12" fx:id="cbMonth12" text="Dec" />
+		    <CheckBox id="cbMonth5" fx:id="cbMonth5" text="Vendredi" />
+		    <CheckBox id="cbMonth6" fx:id="cbMonth6" text="Samedi" />
+		    <CheckBox id="cbMonth7" fx:id="cbMonth7" text="Dimanche" />
 		</HBox>
 	</VBox>
 	<!-- Add Register Button -->

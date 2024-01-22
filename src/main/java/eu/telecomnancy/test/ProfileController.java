@@ -54,16 +54,7 @@ public class ProfileController {
     private CheckBox cbMonth6;
     @FXML
     private CheckBox cbMonth7;
-    @FXML
-    private CheckBox cbMonth8;
-    @FXML
-    private CheckBox cbMonth9;
-    @FXML
-    private CheckBox cbMonth10;
-    @FXML
-    private CheckBox cbMonth11;
-    @FXML
-    private CheckBox cbMonth12;
+
 
 
     @FXML
@@ -107,7 +98,7 @@ public class ProfileController {
         // Mois disponibles
         String availability = user.getAvailability();
         char availabilityArray[] = availability.toCharArray();
-        for( int i = 1; i <= 12; i++ ) {
+        for( int i = 1; i <= 7; i++ ) {
         	String controlName = "#cbMonth" + i;
         	CheckBox cb = (CheckBox) monthCheckboxes.lookup(controlName);
         	availabilityArray[i-1] = ( cb.isSelected() ? 'x' : '.');
@@ -144,7 +135,7 @@ public class ProfileController {
     	if( newProfile ) {
     		titleLabel.setText("Nouvel utilisateur");
             // Cocher toutes les cases
-            for( int i = 1; i <= 12; i++ ) {
+            for( int i = 1; i <= 7; i++ ) {
             	String controlName = "#cbMonth" + i;
             	CheckBox cb = (CheckBox) monthCheckboxes.lookup(controlName);
             	cb.setSelected( true );
@@ -157,7 +148,7 @@ public class ProfileController {
             
             // Mettre � jour les cases a cocher
             char availabilityArray[] = user.getAvailability().toCharArray();
-            for( int i = 1; i <= 12; i++ ) {
+            for( int i = 1; i <= 7; i++ ) {
             	String controlName = "#cbMonth" + i;
             	CheckBox cb = (CheckBox) monthCheckboxes.lookup(controlName);
             	cb.setSelected( availabilityArray[i-1] == 'x' );

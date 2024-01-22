@@ -99,7 +99,8 @@ public class JdbcAd {
             preparedStatement.setBoolean(13, ad.isIsRepetitive());
             seconds = Utils.DateTimeToUnixTime( ad.getEndDate() );
             preparedStatement.setLong(14, seconds);
-            preparedStatement.setInt(15, ad.getId());
+            preparedStatement.setString(15, ad.getPicture());
+            preparedStatement.setInt(16, ad.getId());
             
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
