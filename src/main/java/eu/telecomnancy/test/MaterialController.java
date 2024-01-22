@@ -2,6 +2,8 @@ package eu.telecomnancy.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -36,7 +39,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
-import static eu.telecomnancy.test.DAO.JdbcAd.maxID;
 
 public class MaterialController {
 
@@ -202,7 +204,11 @@ public class MaterialController {
 			// Copiez l'image vers le répertoire de ressources
 			try {
 				if (ad.getPicture().equals("DefaultPicture.jpg")) {
-					newImageName = ad.getId() + ".jpg";
+					System.out.println(ad.getId());
+					byte[] array = new byte[7]; // length is bounded by 7
+					new Random().nextBytes(array);
+					String generatedString = new String(array, StandardCharsets.UTF_8);
+					newImageName = generatedString + ".jpg";
 					ad.setPicture(newImageName);
 				}
 				else {
@@ -210,7 +216,10 @@ public class MaterialController {
 				}
 
 			} catch (NullPointerException e) {
-				newImageName = ad.getId() + ".jpg";
+				byte[] array = new byte[7]; // length is bounded by 7
+				new Random().nextBytes(array);
+				String generatedString = new String(array, StandardCharsets.UTF_8);
+				newImageName = generatedString + ".jpg";
 				ad.setPicture(newImageName);
 			}
 			Path destinationPath = Paths.get(resourcesPath, newImageName);

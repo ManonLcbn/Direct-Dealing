@@ -171,20 +171,5 @@ public class JdbcAd {
         return str_info.toString();
     }
 
-    public static int maxID() throws SQLException {
-    	int maxID = 0;
-        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(ID) FROM Ads") ) {
-            System.out.println(preparedStatement);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            maxID = resultSet.getInt("MAX(ID)");
-
-        } catch (SQLException e) {
-            // print SQL exception information
-            Utils.printSQLException(e);
-        }
-        return maxID;
-    }
-
 
 }
