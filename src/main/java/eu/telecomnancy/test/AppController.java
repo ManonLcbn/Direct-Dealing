@@ -92,7 +92,7 @@ public class AppController {
         	}
         	
 	        GridPane root = page.loadPage(user.getId(), selectedAdId, this);
-			Scene scene = new Scene(root,800,600);
+			Scene scene = new Scene(root,1000,700);
 			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 			secondaryStage.setTitle(Title);
 			secondaryStage.setScene(scene);

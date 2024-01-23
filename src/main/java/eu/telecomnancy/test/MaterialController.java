@@ -63,6 +63,8 @@ public class MaterialController {
 	@FXML
 	private TextArea descriptionIdField;
 	@FXML
+	private Text descriptionText;
+	@FXML
 	private TextField costIdField;
 	@FXML
 	private Text costText;
@@ -79,13 +81,25 @@ public class MaterialController {
 	@FXML
 	private TextField zipcodeField;
 	@FXML
+	private Text codePostalText;
+	@FXML
 	private TextArea commentsField;
+	@FXML
+	private Text commentairesText;
 	@FXML
 	private DatePicker startdateField;
 	@FXML
+	private Text startDateText;
+	@FXML
 	private DatePicker enddateField;
 	@FXML
+	private Text endDateText;
+	@FXML
 	private TextField durationField;
+	@FXML
+	private Text nombreDeJoursText;
+	@FXML
+	private Label joursLabel;
 	private String picture;
 	@FXML
 	private ToggleGroup type1;
@@ -335,29 +349,80 @@ public class MaterialController {
 			nameIdFieldText.setText(nameIdField.getText());
 			nameIdField.setVisible(false);
 			nameIdFieldText.setVisible(true);
-			descriptionIdField.setDisable(true);
+			descriptionText.setText(descriptionIdField.getText());
+			descriptionIdField.setVisible(false);
+			descriptionText.setVisible(true);
 			costText.setText(costIdField.getText() + " Florains");
 			costIdField.setVisible(false);
 			costText.setVisible(true);
 			florainsText.setVisible(false);
-			categoriesText.setText(categories.getSelectionModel().getSelectedItem().getName());
+			if (!(categories.getSelectionModel().getSelectedItem().getName() == null)){
+				categoriesText.setText(categories.getSelectionModel().getSelectedItem().getName());
+			}
+			else {
+				categoriesText.setText("Pas de catégorie");
+			}
 			categories.setVisible(false);
 			categoriesText.setVisible(true);
 			isAvailable.setDisable(true);
-			zipcodeField.setDisable(true);
-			commentsField.setDisable(true);
-			durationField.setDisable(true);
-			startdateField.setDisable(true);
-			enddateField.setDisable(true);
+			if (!(commentsField.getText().isEmpty())){
+				commentairesText.setText(commentsField.getText());
+			}
+			else {
+				commentairesText.setText("Pas de commentaires");
+			}
+			commentsField.setVisible(false);
+			commentairesText.setVisible(true);
+			if (!(zipcodeField.getText().isEmpty())){
+				codePostalText.setText(zipcodeField.getText());
+			}
+			else {
+				codePostalText.setText("Pas de code postal");
+			}
+			zipcodeField.setVisible(false);
+			codePostalText.setVisible(true);
+			if (!(durationField.getText().isEmpty())){
+				nombreDeJoursText.setText(durationField.getText() + " jours");
+			}
+			else {
+				nombreDeJoursText.setText("Pas de durée");
+			}
+			durationField.setVisible(false);
+			joursLabel.setVisible(false);
+			nombreDeJoursText.setVisible(true);
+			if (!(startdateField.getValue() == null)){
+				startDateText.setText(startdateField.getValue().toString());
+			}
+			else {
+				startDateText.setText("Pas de date de début");
+			}
+			startdateField.setVisible(false);
+			startDateText.setVisible(true);
+			if (!(enddateField.getValue() == null)){
+				endDateText.setText(enddateField.getValue().toString());
+			}
+			else {
+				endDateText.setText("Pas de date de fin");
+			}
+			enddateField.setVisible(false);
+			endDateText.setVisible(true);
 			radioButtonHbox.setVisible(false);
     	}
     	else if( !this.isNewAd ) {
 			// L'utilisateur est le proprietaire de l'annonce
-			addButton.setText( "Modifier" );
-			delButton.setDisable( false );
+			addButton.setText("Modifier");
+			delButton.setDisable(false);
+			orderButton.setVisible(false);
+			commentButton.setVisible(false);
 			nameIdFieldText.setVisible(false);
 			categoriesText.setVisible(false);
 			costText.setVisible(false);
+			descriptionText.setVisible(false);
+			codePostalText.setVisible(false);
+			startDateText.setVisible(false);
+			endDateText.setVisible(false);
+			nombreDeJoursText.setVisible(false);
+			commentairesText.setVisible(false);
 		}
     }
 }
