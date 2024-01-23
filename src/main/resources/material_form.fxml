@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
 
 <GridPane fx:id="gridpane" alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.test.MaterialController">
     <padding>
@@ -36,13 +37,15 @@
          <children>
              <!-- Add Cost Label -->
              <Label text="Coût du prêt :" />
+            <Text fx:id="costText" strokeType="OUTSIDE" strokeWidth="0.0" />
              <TextField fx:id="costIdField" maxWidth="70.0" />
-            <Label text="Florains" textAlignment="JUSTIFY" />
+            <Label fx:id="florainsText" text="Florains" textAlignment="JUSTIFY" />
          </children>
       </HBox>
        <!--  Add categorie Label -->
        <Label text="Catégorie :" GridPane.rowIndex="4" />
        <ComboBox fx:id="categories" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="422.0" promptText="Sélectionnez une catégorie" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
+      <Text fx:id="categoriesText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
        <!-- Add Description Label -->
        <Label text="Description :" GridPane.rowIndex="5" GridPane.valignment="TOP" />
        <TextArea fx:id="descriptionIdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="350.0" promptText="Brève description de l'appareil" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="5" />
@@ -83,7 +86,7 @@
             <Insets />
          </opaqueInsets>
       </HBox>
-      <HBox spacing="30.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <HBox fx:id="radioButtonHbox" spacing="30.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <children>
            <RadioButton mnemonicParsing="false" selected="true" text="Je propose">
              <padding>
@@ -100,6 +103,10 @@
       </HBox>
        <!-- Add Name Text Field -->
        <TextField fx:id="nameIdField" promptText="Modèle/type/marque" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="3" />
+      <Text fx:id="nameIdFieldText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="525.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin></Text>
       <Label fx:id="adInfo" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="14">
          <children>

@@ -34,6 +34,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -57,11 +59,19 @@ public class MaterialController {
 	@FXML
 	private TextField nameIdField;
 	@FXML
+	private Text nameIdFieldText;
+	@FXML
 	private TextArea descriptionIdField;
 	@FXML
 	private TextField costIdField;
 	@FXML
+	private Text costText;
+	@FXML
+	private Label florainsText;
+	@FXML
 	private ComboBox<MatCat> categories;
+	@FXML
+	private Text categoriesText;
 	@FXML
 	private CheckBox isAvailable;
 	@FXML
@@ -81,6 +91,8 @@ public class MaterialController {
 	private ToggleGroup type1;
 	@FXML
 	private GridPane gridpane;
+	@FXML
+	public HBox radioButtonHbox;
 
 
 
@@ -314,25 +326,38 @@ public class MaterialController {
     	// Mise � jour de l'etat des boutons
     	if( userId != ad.getUserId() ) {
 			// L'utilisateur n'est pas le proprietaire de l'annonce
+
     		addButton.setVisible( false );
     		orderButton.setDisable( false );
 			commentButton.setDisable( false );
 			addImageButton.setVisible(false);
 			delButton.setVisible(false);
-			nameIdField.setDisable(true);
+			nameIdFieldText.setText(nameIdField.getText());
+			nameIdField.setVisible(false);
+			nameIdFieldText.setVisible(true);
 			descriptionIdField.setDisable(true);
-			costIdField.setDisable(true);
-			categories.setDisable(true);
+			costText.setText(costIdField.getText() + " Florains");
+			costIdField.setVisible(false);
+			costText.setVisible(true);
+			florainsText.setVisible(false);
+			categoriesText.setText(categories.getSelectionModel().getSelectedItem().getName());
+			categories.setVisible(false);
+			categoriesText.setVisible(true);
 			isAvailable.setDisable(true);
 			zipcodeField.setDisable(true);
 			commentsField.setDisable(true);
 			durationField.setDisable(true);
 			startdateField.setDisable(true);
 			enddateField.setDisable(true);
+			radioButtonHbox.setVisible(false);
     	}
     	else if( !this.isNewAd ) {
+			// L'utilisateur est le proprietaire de l'annonce
 			addButton.setText( "Modifier" );
 			delButton.setDisable( false );
+			nameIdFieldText.setVisible(false);
+			categoriesText.setVisible(false);
+			costText.setVisible(false);
 		}
     }
 }
