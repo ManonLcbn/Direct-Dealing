@@ -5,11 +5,11 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 import java.time.LocalDate;
-import eu.telecomnancy.test.DAO.JdbcAd;
 import eu.telecomnancy.test.DAO.JdbcMatCat;
+import eu.telecomnancy.test.DAO.JdbcService;
 import eu.telecomnancy.test.DAO.JdbcStandby;
-import eu.telecomnancy.test.base.Ad;
 import eu.telecomnancy.test.base.MatCat;
+import eu.telecomnancy.test.base.Service;
 import eu.telecomnancy.test.base.Standby;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -35,15 +35,15 @@ import javafx.util.converter.NumberStringConverter;
 import java.util.List;
 
 public class ServicePonctualController {
-	private Ad ad = null;
-	private boolean isNewAd;
+	private Service service = null;
+	private boolean isNewService;
 	private int currentUserId;
 	private List<MatCat> matCatList;
 	private ObservableList<MatCat> matCatObs;
 	private AppController appController;
 	
 	@FXML
-	private Label adInfo;
+	private Label serviceInfo;
 	@FXML
 	private RadioButton requestRadiobutton;
 	@FXML
@@ -77,7 +77,7 @@ public class ServicePonctualController {
     public void commentAd(ActionEvent event) throws IOException {
     	Stage thirdStage = new Stage();
    		FeedbackView page = new FeedbackView();
-	    GridPane root = page.loadPage( currentUserId, ad.getId(), appController );
+	    GridPane root = page.loadPage( currentUserId, service.getId(), appController );
 		Scene scene = new Scene(root,400,200);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		thirdStage.setTitle("Donnez votre avis");
@@ -90,11 +90,11 @@ public class ServicePonctualController {
 
         Window owner = addButton.getScene().getWindow();
         
-        if( ad.isIsAvailable() ) {
+        if( service.isIsAvailable() ) {
         	// Service non disponible
         	int ret = JOptionPane.NO_OPTION;
         	// test si l'utilisateur a deja une reservation
-            Standby book = new Standby(currentUserId,ad.getId(),LocalDate.now());
+            Standby book = new Standby(currentUserId,service.getId(),LocalDate.now());
             JdbcStandby db_s = new JdbcStandby();
             boolean isExists = db_s.isExists(book);	
             if( isExists ) {
@@ -102,7 +102,7 @@ public class ServicePonctualController {
             }
             else {
 	        	JdbcStandby db = new JdbcStandby();
-	        	int total = db.selectCount(ad.getId());
+	        	int total = db.selectCount(service.getId());
 	            if( total > 1 ) {
 		        	ret = Utils.confirmBox("Il y a déjà " + total + " demandes en attente sur cette proposition.\nSouhaitez-vous être "
 		        			+ "prévu des qu'une disponibilité se présente?", "Proposition non disponible" );
@@ -137,12 +137,12 @@ public class ServicePonctualController {
 
         Window owner = addButton.getScene().getWindow();
 
-        JdbcAd db_a = new JdbcAd();
-    	if( this.isNewAd ) {
-	       	db_a.insert(ad);
+        JdbcService db_s = new JdbcService();
+    	if( this.isNewService ) {
+	       	db_s.insert(service);
     	}
     	else {
-    		db_a.update(ad);
+    		db_s.update(service);
     	}
        	appController.refreshTableView();
        	owner.hide();
@@ -155,8 +155,8 @@ public class ServicePonctualController {
 
     	int ret = Utils.confirmBox("Confirmez-vous l'effacement de cette annonce?", "Effacement" );
     	if( ret == JOptionPane.YES_OPTION ) {
-    		JdbcAd db = new JdbcAd();
-    		db.delete(ad.getId());
+    		JdbcService db = new JdbcService();
+    		db.delete(service.getId());
         	appController.refreshTableView();
     	}
     	owner.hide();
@@ -169,7 +169,7 @@ public class ServicePonctualController {
 		actualWindow.hide();
 		Stage thirdStage = new Stage();
    		ServiceRecurrentView page = new ServiceRecurrentView();
-	    GridPane root = page.loadPage( currentUserId, ad.getId(), appController );
+	    GridPane root = page.loadPage( currentUserId, service.getId(), appController );
 		Scene scene = new Scene(root,800,600);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		thirdStage.setTitle("TelecomNancy DirectDealing - Service");
@@ -180,22 +180,22 @@ public class ServicePonctualController {
 
 	
 
-    public void initPage( int userId, int adId, AppController appController ) throws SQLException {
+    public void initPage( int userId, int serviceId, AppController appController ) throws SQLException {
 
     	this.currentUserId = userId;
     	this.appController = appController;
     	// cree une nouvelle annonce associe a l'utilisateur en cours
-    	if( adId == 0 ) {
-    		ad = new Ad( userId, false );
-    		this.isNewAd = true;
+    	if( serviceId == 0 ) {
+    		service = new Service( userId);
+    		this.isNewService = true;
     	}
     	else {
     		// Lit l'annonce dans la base de donnees
-    		JdbcAd db_a = new JdbcAd();
-    		ad = db_a.selectByID(adId);
-    		this.isNewAd = false;
-    		String info = db_a.readInfoByID(adId);
-    		adInfo.setText(info);
+    		JdbcService db_s = new JdbcService();
+    		service = db_s.selectByID(serviceId);
+    		this.isNewService = false;
+    		String info = db_s.readInfoByID(serviceId);
+    		serviceInfo.setText(info);
     	}
     	
     	// Rempli la comboxbox contenant les types de categorie
@@ -204,8 +204,8 @@ public class ServicePonctualController {
     	matCatObs = FXCollections.observableArrayList(matCatList);
     	
     	categories.setItems(matCatObs);
-    	if( !ad.getTitle().isEmpty() )
-    		categories.getSelectionModel().select(ad.getCategoryId());
+    	if( !service.getTitle().isEmpty() )
+    		categories.getSelectionModel().select(service.getCategoryId());
     	/*categories.setConverter(new StringConverter<MatCat>() {
     	    @Override
     	    public String toString(MatCat object) {
@@ -221,14 +221,14 @@ public class ServicePonctualController {
     	});*/
     	
     	// Permet une mise a jour auto des variables
-    	Bindings.bindBidirectional(requestRadiobutton.selectedProperty(), ad.isRequestProperty());
-    	Bindings.bindBidirectional(nameIdField.textProperty(), ad.titleProperty());
-    	Bindings.bindBidirectional(costIdField.textProperty(), ad.costProperty(), new NumberStringConverter());
+    	Bindings.bindBidirectional(requestRadiobutton.selectedProperty(), service.isRequestProperty());
+    	Bindings.bindBidirectional(nameIdField.textProperty(), service.titleProperty());
+    	Bindings.bindBidirectional(costIdField.textProperty(), service.costProperty(), new NumberStringConverter());
     	// Ne fonctionne pas
     	//Bindings.bindBidirectional(categories.getSelectionModel().getSelectedItem().idProperty(), material.categoryIdProperty());
     	//Bindings.bindBidirectional(categories.valueProperty(), material.matcatProperty());
     	
-        ad.categoryIdProperty().bind(Bindings.createIntegerBinding(() -> {
+        service.categoryIdProperty().bind(Bindings.createIntegerBinding(() -> {
             MatCat selectedItem = categories.getValue();
             return (selectedItem != null) ? selectedItem.getId() : 0;
         }, categories.valueProperty()));
@@ -236,23 +236,23 @@ public class ServicePonctualController {
         categories.valueProperty().addListener(new ChangeListener<MatCat>() {
             @Override
             public void changed(ObservableValue ov, MatCat oldData, MatCat newData) {
-            	ad.costProperty().setValue( newData.getSuggestedCostd() );
+            	service.costProperty().setValue( newData.getSuggestedCostd() );
             }
           });
         
-    	Bindings.bindBidirectional(descriptionIdField.textProperty(), ad.descriptionProperty());
+    	Bindings.bindBidirectional(descriptionIdField.textProperty(), service.descriptionProperty());
 
-    	Bindings.bindBidirectional(zipcodeField.textProperty(), ad.localizationProperty());
-    	Bindings.bindBidirectional(commentsField.textProperty(), ad.commentsProperty());
+    	Bindings.bindBidirectional(zipcodeField.textProperty(), service.localizationProperty());
+    	Bindings.bindBidirectional(commentsField.textProperty(), service.commentsProperty());
 		
 
 		
     	// Mise à jour de l'etat des boutons
-    	if( userId != ad.getUserId() ) {
+    	if( userId != service.getUserId() ) {
     		addButton.setDisable( true );
     		orderButton.setDisable( false );
     	}
-    	else if( !this.isNewAd ) {
+    	else if( !this.isNewService ) {
 			addButton.setText( "Modifier" );
 			delButton.setDisable( false );
 		}
