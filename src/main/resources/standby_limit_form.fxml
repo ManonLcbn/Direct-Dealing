@@ -15,7 +15,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Button?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+<GridPane alignment="center" stylesheets="@application.css" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
 		fx:controller="eu.telecomnancy.test.StbLimitController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
