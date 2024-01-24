@@ -11,7 +11,7 @@ public class MaterialView  implements GenericView {
 	public GridPane loadPage( int userId, int adId, AppController appCtrl ) throws IOException {
     
     // Charger le fichier FXML pour la page de principale de l'application
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/material_form.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(Utils.SRC_URL + "/material_form.fxml"));
     GridPane root = loader.load();
 
 

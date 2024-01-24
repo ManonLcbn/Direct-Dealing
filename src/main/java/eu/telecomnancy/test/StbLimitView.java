@@ -11,7 +11,7 @@ public class StbLimitView {
     public GridPane loadPage( Standby booking ) throws IOException {
 
     // Charger le fichier FXML pour la page de cr�ation/modification du compte utilisateur
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/standby_limit_form.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(Utils.SRC_URL + "/standby_limit_form.fxml"));
     GridPane root = loader.load();
 
     // Récupérer le contrôleur

@@ -17,7 +17,7 @@ public class ProfileView {
         public GridPane loadPage() throws IOException {
  
         // Charger le fichier FXML pour la page de création/modification du compte utilisateur
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/profile_form.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Utils.SRC_URL + "/profile_form.fxml"));
         GridPane root = loader.load();
 
         // Récupérer le contrôleur

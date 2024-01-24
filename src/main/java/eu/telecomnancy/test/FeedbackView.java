@@ -10,7 +10,7 @@ public class FeedbackView {
     public GridPane loadPage( int userId, int adId, AppController appCtrl ) throws IOException {
 
     // Charger le fichier FXML pour la page de cr�ation/modification du compte utilisateur
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/feedback_form.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(Utils.SRC_URL + "/feedback_form.fxml"));
     GridPane root = loader.load();
 
     // Récupérer le contrôleur

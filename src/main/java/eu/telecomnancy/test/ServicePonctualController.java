@@ -79,7 +79,7 @@ public class ServicePonctualController {
    		FeedbackView page = new FeedbackView();
 	    GridPane root = page.loadPage( currentUserId, service.getId(), appController );
 		Scene scene = new Scene(root,400,200);
-		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
 		thirdStage.setTitle("Donnez votre avis");
 		thirdStage.setScene(scene);
 		thirdStage.show();          		
@@ -117,7 +117,7 @@ public class ServicePonctualController {
 	               		StbLimitView page = new StbLimitView();
 	         	        GridPane root = page.loadPage(book);
 	        			Scene scene = new Scene(root,400,200);
-	        			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+	        			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
 	        			thirdStage.setTitle("Date limite de la demande");
 	        			thirdStage.setScene(scene);
 	        			thirdStage.show();          		
@@ -258,4 +258,3 @@ public class ServicePonctualController {
 		}
     }
 }
-

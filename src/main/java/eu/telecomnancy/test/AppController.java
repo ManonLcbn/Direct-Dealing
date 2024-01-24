@@ -65,9 +65,9 @@ public class AppController {
         try {
         	ProfileView page = new ProfileView( user.getId() );
 	        GridPane root = page.loadPage();
-			Scene scene = new Scene(root,550,500);
+			Scene scene = new Scene(root,750,550);
 			
-			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
 			secondaryStage.setTitle("TelecomNancy DirectDealing - Profile");
 			secondaryStage.setScene(scene);
 			secondaryStage.show();
@@ -92,8 +92,8 @@ public class AppController {
         	}
         	
 	        GridPane root = page.loadPage(user.getId(), selectedAdId, this);
-			Scene scene = new Scene(root,1000,700);
-			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+			Scene scene = new Scene(root,1200,700);
+			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
 			secondaryStage.setTitle(Title);
 			secondaryStage.setScene(scene);
 			secondaryStage.show();

@@ -14,6 +14,9 @@ import javafx.stage.Window;
 public class Utils {
 
 	public static final String DATABASE_URL = "jdbc:sqlite:src/main/resources/DirectDealing.db";
+    
+    public static final String SRC_URL = "";
+    //public static final String SRC_URL = "/main/resources";	
 	
     static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);

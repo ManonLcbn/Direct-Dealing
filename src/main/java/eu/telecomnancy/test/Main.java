@@ -16,7 +16,7 @@ public class Main extends Application {
 			GridPane root = page.loadPage();
 			Scene scene = new Scene(root,800,600);
 			
-			scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
 			primaryStage.setTitle("TelecomNancy DirectDealing");
 			primaryStage.setScene(scene);
 			primaryStage.show();

@@ -10,7 +10,7 @@ public class LoginView {
     public GridPane loadPage() throws IOException {
 
     // Charger le fichier FXML pour la page de création/modification du compte utilisateur
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/login_form.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(Utils.SRC_URL + "/login_form.fxml"));
     GridPane root = loader.load();
 
     // Récupérer le contrôleur

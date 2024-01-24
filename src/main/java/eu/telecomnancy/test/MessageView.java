@@ -10,7 +10,7 @@ public class MessageView extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/MessageView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(Utils.SRC_URL + "/MessageView.fxml"));
         primaryStage.setTitle("Chat entre User1 et User2");
         primaryStage.setScene(new Scene(root, 400, 400));
         primaryStage.show();
