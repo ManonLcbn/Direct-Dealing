@@ -2,6 +2,8 @@ package eu.telecomnancy.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -31,12 +34,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
-import static eu.telecomnancy.test.DAO.JdbcAd.maxID;
 
 public class MaterialController {
 
@@ -55,11 +59,21 @@ public class MaterialController {
 	@FXML
 	private TextField nameIdField;
 	@FXML
+	private Text nameIdFieldText;
+	@FXML
 	private TextArea descriptionIdField;
+	@FXML
+	private Text descriptionText;
 	@FXML
 	private TextField costIdField;
 	@FXML
+	private Text costText;
+	@FXML
+	private Label florainsText;
+	@FXML
 	private ComboBox<MatCat> categories;
+	@FXML
+	private Text categoriesText;
 	@FXML
 	private CheckBox isAvailable;
 	@FXML
@@ -67,18 +81,32 @@ public class MaterialController {
 	@FXML
 	private TextField zipcodeField;
 	@FXML
+	private Text codePostalText;
+	@FXML
 	private TextArea commentsField;
+	@FXML
+	private Text commentairesText;
 	@FXML
 	private DatePicker startdateField;
 	@FXML
+	private Text startDateText;
+	@FXML
 	private DatePicker enddateField;
 	@FXML
+	private Text endDateText;
+	@FXML
 	private TextField durationField;
+	@FXML
+	private Text nombreDeJoursText;
+	@FXML
+	private Label joursLabel;
 	private String picture;
 	@FXML
 	private ToggleGroup type1;
 	@FXML
 	private GridPane gridpane;
+	@FXML
+	public HBox radioButtonHbox;
 
 
 
@@ -202,7 +230,11 @@ public class MaterialController {
 			// Copiez l'image vers le répertoire de ressources
 			try {
 				if (ad.getPicture().equals("DefaultPicture.jpg")) {
-					newImageName = ad.getId() + ".jpg";
+					System.out.println(ad.getId());
+					byte[] array = new byte[7]; // length is bounded by 7
+					new Random().nextBytes(array);
+					String generatedString = new String(array, StandardCharsets.UTF_8);
+					newImageName = generatedString + ".jpg";
 					ad.setPicture(newImageName);
 				}
 				else {
@@ -210,7 +242,10 @@ public class MaterialController {
 				}
 
 			} catch (NullPointerException e) {
-				newImageName = ad.getId() + ".jpg";
+				byte[] array = new byte[7]; // length is bounded by 7
+				new Random().nextBytes(array);
+				String generatedString = new String(array, StandardCharsets.UTF_8);
+				newImageName = generatedString + ".jpg";
 				ad.setPicture(newImageName);
 			}
 			Path destinationPath = Paths.get(resourcesPath, newImageName);
@@ -292,7 +327,7 @@ public class MaterialController {
     	Bindings.bindBidirectional(enddateField.valueProperty(), ad.endDateProperty());
 
 		// Affiche l'image associee a l'annonce
-		String path = RESOURCE_FOLDER + ad.getPicture();
+		String path = "src/main/resources/" + RESOURCE_FOLDER + ad.getPicture();
 		System.out.println(path);
 		productImage.setImage(new Image(new File(path).toURI().toString()));
 		if (productImage.getImage() == null) {
@@ -305,25 +340,89 @@ public class MaterialController {
     	// Mise � jour de l'etat des boutons
     	if( userId != ad.getUserId() ) {
 			// L'utilisateur n'est pas le proprietaire de l'annonce
+
     		addButton.setVisible( false );
     		orderButton.setDisable( false );
 			commentButton.setDisable( false );
 			addImageButton.setVisible(false);
 			delButton.setVisible(false);
-			nameIdField.setDisable(true);
-			descriptionIdField.setDisable(true);
-			costIdField.setDisable(true);
-			categories.setDisable(true);
+			nameIdFieldText.setText(nameIdField.getText());
+			nameIdField.setVisible(false);
+			nameIdFieldText.setVisible(true);
+			descriptionText.setText(descriptionIdField.getText());
+			descriptionIdField.setVisible(false);
+			descriptionText.setVisible(true);
+			costText.setText(costIdField.getText() + " Florains");
+			costIdField.setVisible(false);
+			costText.setVisible(true);
+			florainsText.setVisible(false);
+			if (!(categories.getSelectionModel().getSelectedItem().getName() == null)){
+				categoriesText.setText(categories.getSelectionModel().getSelectedItem().getName());
+			}
+			else {
+				categoriesText.setText("Pas de catégorie");
+			}
+			categories.setVisible(false);
+			categoriesText.setVisible(true);
 			isAvailable.setDisable(true);
-			zipcodeField.setDisable(true);
-			commentsField.setDisable(true);
-			durationField.setDisable(true);
-			startdateField.setDisable(true);
-			enddateField.setDisable(true);
+			if (!(commentsField.getText().isEmpty())){
+				commentairesText.setText(commentsField.getText());
+			}
+			else {
+				commentairesText.setText("Pas de commentaires");
+			}
+			commentsField.setVisible(false);
+			commentairesText.setVisible(true);
+			if (!(zipcodeField.getText().isEmpty())){
+				codePostalText.setText(zipcodeField.getText());
+			}
+			else {
+				codePostalText.setText("Pas de code postal");
+			}
+			zipcodeField.setVisible(false);
+			codePostalText.setVisible(true);
+			if (!(durationField.getText().isEmpty())){
+				nombreDeJoursText.setText(durationField.getText() + " jours");
+			}
+			else {
+				nombreDeJoursText.setText("Pas de durée");
+			}
+			durationField.setVisible(false);
+			joursLabel.setVisible(false);
+			nombreDeJoursText.setVisible(true);
+			if (!(startdateField.getValue() == null)){
+				startDateText.setText(startdateField.getValue().toString());
+			}
+			else {
+				startDateText.setText("Pas de date de début");
+			}
+			startdateField.setVisible(false);
+			startDateText.setVisible(true);
+			if (!(enddateField.getValue() == null)){
+				endDateText.setText(enddateField.getValue().toString());
+			}
+			else {
+				endDateText.setText("Pas de date de fin");
+			}
+			enddateField.setVisible(false);
+			endDateText.setVisible(true);
+			radioButtonHbox.setVisible(false);
     	}
     	else if( !this.isNewAd ) {
-			addButton.setText( "Modifier" );
-			delButton.setDisable( false );
+			// L'utilisateur est le proprietaire de l'annonce
+			addButton.setText("Modifier");
+			delButton.setDisable(false);
+			orderButton.setVisible(false);
+			commentButton.setVisible(false);
+			nameIdFieldText.setVisible(false);
+			categoriesText.setVisible(false);
+			costText.setVisible(false);
+			descriptionText.setVisible(false);
+			codePostalText.setVisible(false);
+			startDateText.setVisible(false);
+			endDateText.setVisible(false);
+			nombreDeJoursText.setVisible(false);
+			commentairesText.setVisible(false);
 		}
     }
 }

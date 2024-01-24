@@ -14,12 +14,12 @@ public class JdbcAd {
 
     // Replace below database url, username and password with your actual database credentials
     private static final String INSERT_QUERY = "INSERT INTO Ads (IsRequest,UserId,IsMaterial,Title,FCost,Description," +
-    		"CategoryID,isAvailable,Localization,Comments,StartDateUTC,DurationInDay,IsRepetitive,EndDateUTC, picture)" +
+    		"CategoryID,isAvailable,Localization,Comments,StartDateUTC,DurationInDay,IsRepetitive,EndDateUTC, Picture)" +
     		"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Ads WHERE ID=?";
     private static final String UPDATE_QUERY = "UPDATE Ads SET IsRequest=?,UserId=?,IsMaterial=?,Title=?,FCost=?,Description=?," +
     		"CategoryID=?,isAvailable=?,Localization=?,Comments=?," +
-    		"StartDateUTC=?,DurationInDay=?,IsRepetitive=?,EndDateUTC=?, picture=? WHERE ID=?";
+    		"StartDateUTC=?,DurationInDay=?,IsRepetitive=?,EndDateUTC=?, Picture=? WHERE ID=?";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Ads WHERE ID=?";
     private static final String READ_INFO_BY_ID_QUERY = "SELECT *, u.Name as Username FROM Ads INNER JOIN Users u " +
     		"ON u.ID = Ads.UserID WHERE Ads.ID=?";
@@ -169,21 +169,6 @@ public class JdbcAd {
             Utils.printSQLException(e);
         }
         return str_info.toString();
-    }
-
-    public static int maxID() throws SQLException {
-    	int maxID = 0;
-        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(ID) FROM Ads") ) {
-            System.out.println(preparedStatement);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            maxID = resultSet.getInt("MAX(ID)");
-
-        } catch (SQLException e) {
-            // print SQL exception information
-            Utils.printSQLException(e);
-        }
-        return maxID;
     }
 
 
