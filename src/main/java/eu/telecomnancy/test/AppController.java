@@ -178,7 +178,7 @@ public class AppController {
             row.setOnMouseClicked(event -> {
             	if( !row.isEmpty() ) {
 	                AnnonceRow rowData = row.getItem();
-	                selectedAdId = ((AdRow)rowData).getAdId();
+	                selectedAdId = (rowData).getId();
 	                // Complete la table des avis utilisateur
 					try {
 				    	List<Feedback> fbRowList = db_f.selectByAdId(selectedAdId);

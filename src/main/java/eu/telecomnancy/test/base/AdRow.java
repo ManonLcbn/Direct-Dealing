@@ -2,18 +2,18 @@ package eu.telecomnancy.test.base;
 
 public class AdRow extends AnnonceRow{
 
-	private int adId;
+	private int Id;
 	private boolean isMaterial;
 	private String Localization;
 	private String ProfileName;
 	private String Type;
 	private String info;
 	
-	public int getAdId() {
-		return adId;
+	public int getId() {
+		return Id;
 	}
-	public void setAdId(int adId) {
-		this.adId = adId;
+	public void setId(int Id) {
+		this.Id = Id;
 	}
 	public boolean isMaterial() {
 		return isMaterial;
@@ -50,8 +50,8 @@ public class AdRow extends AnnonceRow{
 	}
 
 	
-	public AdRow( int aId, boolean isMaterial, String localization, String profileName, String type, String info ) {
-		this.adId = aId;
+	public AdRow( int Id, boolean isMaterial, String localization, String profileName, String type, String info ) {
+		this.Id = Id;
 		this.isMaterial = isMaterial;
 		this.Localization = localization;
 		this.ProfileName = profileName;

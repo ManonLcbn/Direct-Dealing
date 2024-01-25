@@ -146,7 +146,7 @@ public class JdbcService {
             		resultSet.getString("Day"),
             		resultSet.getInt("Hour"),
                     resultSet.getInt("Minutes"),
-                    resultSet.getInt("Cost"));
+                    resultSet.getInt("FCost"));
 
         } catch (SQLException e) {
             // print SQL exception information

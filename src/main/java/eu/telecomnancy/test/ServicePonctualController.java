@@ -249,12 +249,27 @@ public class ServicePonctualController {
 		
     	// Mise à jour de l'etat des boutons
     	if( userId != service.getUserId() ) {
-    		addButton.setDisable( true );
+    		addButton.setVisible( false );
     		orderButton.setDisable( false );
+			commentButton.setDisable(false);
+			delButton.setVisible(false);
+			nameIdField.setVisible(false);
+			descriptionIdField.setVisible(false);
+			costIdField.setVisible(false);
+			categories.setVisible(false);
+			commentsField.setVisible(false);
+			zipcodeField.setVisible(false);
+			dateField.setVisible(false);
+			heure.setVisible(false);
+			minutes.setVisible(false);
+			
     	}
     	else if( !this.isNewService ) {
 			addButton.setText( "Modifier" );
 			delButton.setDisable( false );
+			orderButton.setVisible(false);
+			commentButton.setVisible(false);
+			
 		}
     }
 }

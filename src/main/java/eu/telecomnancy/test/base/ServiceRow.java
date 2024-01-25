@@ -2,18 +2,18 @@ package eu.telecomnancy.test.base;
 
 public class ServiceRow extends AnnonceRow{
 
-	private int serviceId;
+	private int Id;
 	private String Localization;
 	private String ProfileName;
 	private String Type;
 	private String info;
 	private boolean isPonctual;
 	
-	public int getServiceId() {
-		return serviceId;
+	public int getId() {
+		return Id;
 	}
-	public void setServiceId(int serviceId) {
-		this.serviceId = serviceId;
+	public void setId(int Id) {
+		this.Id = Id;
 	}
 	public String getLocalization() {
 		return Localization;
@@ -51,8 +51,8 @@ public class ServiceRow extends AnnonceRow{
 	}
 
 	
-	public ServiceRow( int sId, String localization, String profileName, String type, String info,boolean isPonctual ) {
-		this.serviceId = sId;
+	public ServiceRow( int Id, String localization, String profileName, String type, String info,boolean isPonctual ) {
+		this.Id = Id;
 		this.Localization = localization;
 		this.ProfileName = profileName;
 		this.Type = type;
