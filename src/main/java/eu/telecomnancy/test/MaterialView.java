@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.GridPane;
 
-public class MaterialView  implements GenericView {
+public class MaterialView implements GenericView {
 	
 	public GridPane loadPage( int userId, int adId, AppController appCtrl ) throws IOException {
     

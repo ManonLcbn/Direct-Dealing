@@ -1,22 +1,26 @@
 package eu.telecomnancy.test;
 
-import javafx.application.Application;
+import java.io.IOException;
+import java.sql.SQLException;
+
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
 
-public class MessageView extends Application {
+public class MessageView implements GenericView {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(Utils.SRC_URL + "/MessageView.fxml"));
-        primaryStage.setTitle("Chat entre User1 et User2");
-        primaryStage.setScene(new Scene(root, 400, 400));
-        primaryStage.show();
-    }
+    public GridPane loadPage( int userId, int adId, AppController appCtrl ) throws IOException {
 
-    public static void main(String[] args) {
-        launch(args);
+        // Charger le fichier FXML pour la page de principale de l'application
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Utils.SRC_URL + "/message_form.fxml"));
+        GridPane root = loader.load();
+
+
+        // Récupérer le contrôleur
+        MessageController controller = loader.getController();
+
+        // Initialiser la page
+        controller.initPage();
+
+        return root;
     }
 }

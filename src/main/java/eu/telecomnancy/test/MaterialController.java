@@ -114,8 +114,19 @@ public class MaterialController {
     private Button addButton, delButton, orderButton, commentButton, addImageButton;
 
 	@FXML
-	public void openMessageConversation(){
+	public void openMessageConversation() throws IOException {
 		System.out.println("Tentative d'envoyer un message !");
+
+		Stage messageStage = new Stage();
+		MessageView messageView = new MessageView();
+		GridPane messageRoot = messageView.loadPage(currentUserId, ad.getId(), appController);
+
+		// Créez une nouvelle fenêtre pour afficher le message
+		Scene messageScene = new Scene(messageRoot, 400, 200);
+		messageScene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
+		messageStage.setTitle("Envoyer un message");
+		messageStage.setScene(messageScene);
+		messageStage.show();
 	}
 	
     @FXML
