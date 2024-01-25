@@ -112,6 +112,11 @@ public class MaterialController {
 
 	@FXML
     private Button addButton, delButton, orderButton, commentButton, addImageButton;
+
+	@FXML
+	public void openMessageConversation(){
+		System.out.println("Tentative d'envoyer un message !");
+	}
 	
     @FXML
     public void commentAd(ActionEvent event) throws IOException {
