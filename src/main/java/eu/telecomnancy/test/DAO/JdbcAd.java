@@ -171,5 +171,26 @@ public class JdbcAd {
         return str_info.toString();
     }
 
+    public int selectUserIdByID(int ID) throws SQLException {
+        int userId = -1; // Valeur par défaut en cas d'échec
+
+        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT UserID FROM Ads WHERE ID=?")) {
+            preparedStatement.setInt(1, ID);
+            System.out.println(preparedStatement);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                userId = resultSet.getInt("UserID");
+            }
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            Utils.printSQLException(e);
+        }
+
+        return userId;
+    }
+
 
 }

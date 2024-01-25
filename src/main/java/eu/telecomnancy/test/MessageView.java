@@ -19,7 +19,7 @@ public class MessageView implements GenericView {
         MessageController controller = loader.getController();
 
         // Initialiser la page
-        controller.initPage();
+        controller.initPage(userId, adId);
 
         return root;
     }
