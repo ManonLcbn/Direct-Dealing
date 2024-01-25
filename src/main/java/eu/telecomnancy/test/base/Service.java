@@ -4,7 +4,7 @@ import javafx.beans.property.*;
 import java.time.*;
 
 
-public class Service {
+public class Service extends Annonce {
 	
 
 	private int id;

@@ -6,7 +6,10 @@ import java.util.List;
 
 import eu.telecomnancy.test.DAO.JdbcAdRow;
 import eu.telecomnancy.test.DAO.JdbcFeedback;
+import eu.telecomnancy.test.DAO.JdbcServiceRow;
 import eu.telecomnancy.test.base.AdRow;
+import eu.telecomnancy.test.base.ServiceRow;
+import eu.telecomnancy.test.base.AnnonceRow;
 import eu.telecomnancy.test.base.Feedback;
 import eu.telecomnancy.test.base.User;
 import javafx.beans.binding.Bindings;
@@ -34,8 +37,9 @@ public class AppController {
 	private User user;
 	private int selectedAdId;
 	private JdbcAdRow db_a = new JdbcAdRow();
-	private ObservableList<AdRow> adRows = FXCollections.observableArrayList();
-	private Property<ObservableList<AdRow>> adRowsProperty = new SimpleObjectProperty<>(adRows); 
+	private JdbcServiceRow db_s=new JdbcServiceRow();
+	private ObservableList<AnnonceRow> annonceRows = FXCollections.observableArrayList();
+	private Property<ObservableList<AnnonceRow>> annonceRowsProperty = new SimpleObjectProperty<>(annonceRows); 
 	private JdbcFeedback db_f = new JdbcFeedback();
 	private ObservableList<Feedback> feedbackRows = FXCollections.observableArrayList();
 	private Property<ObservableList<Feedback>> feedbackRowsProperty = new SimpleObjectProperty<>(feedbackRows); 
@@ -49,9 +53,9 @@ public class AppController {
     @FXML
     private ToggleGroup filter1;
     @FXML
-    private TableView<AdRow> adsTableView;
+    private TableView<AnnonceRow> annoncesTableView;
     @FXML
-    private TableColumn<AdRow,String> adRow1, adRow2, adRow3, adRow4;
+    private TableColumn<AnnonceRow,String> annonceRow1, annonceRow2, annonceRow3, annonceRow4;
     @FXML
     private TextField keywords;
     @FXML
@@ -76,7 +80,7 @@ public class AppController {
         }
     }
 	
-    private void openMaterialForm( boolean isAutoSelect ) {
+    private void openMaterialForm( boolean isAutoSelect,boolean isRecurrent ) {
     	Stage secondaryStage = new Stage();
         try {
         	GenericView page;
@@ -87,7 +91,12 @@ public class AppController {
         		Title += " - Material";
         	}
         	else {
-        		page = new ServicePonctualView();
+				if (isRecurrent){
+					page=new ServiceRecurrentView();
+				}
+				else {
+					page = new ServicePonctualView();
+				}
         		Title += " - Service";
         	}
         	
@@ -105,7 +114,7 @@ public class AppController {
     @FXML
     public void addDeal(ActionEvent event) {
     	selectedAdId = 0;
-    	openMaterialForm(false);
+    	openMaterialForm(false,false);
     	event.consume();
     }
 
@@ -116,41 +125,60 @@ public class AppController {
 
     @FXML
     public void aboutDeal(ActionEvent event) {
-    	AdRow selectedRow = adsTableView.getSelectionModel().getSelectedItem();
+    	AnnonceRow selectedRow = annoncesTableView.getSelectionModel().getSelectedItem();
     	boolean isValidAd = ( selectedRow.isMaterial() );
-    	openMaterialForm(isValidAd);
+		boolean isRecurrent=false;
+		if (!isValidAd && !(((ServiceRow)selectedRow).isPonctual())){
+			isRecurrent=true;
+		}
+    	openMaterialForm(isValidAd,isRecurrent);
     	event.consume();
     }
   
     public void refreshTableView() throws SQLException {
     	List<AdRow> rowList = db_a.selectAll();
-    	adRows.setAll(rowList);
+    	annonceRows.setAll(rowList);
     	//List<Feedback> fbRowList = db_f.selectByAdId(selectedAdId);
 		//feedbackRows.setAll(fbRowList);
     	aboutButton.setDisable(true);
     }
+
+	@FXML
+	public void showServices(ActionEvent event) throws SQLException{
+		List<ServiceRow> rowList=db_s.selectAll();
+		annonceRows.setAll(rowList);
+		aboutButton.setDisable(true);
+	}
+
+	@FXML
+	public void showAds(ActionEvent event) throws SQLException{
+		List<AdRow> rowList=db_a.selectAll();
+		annonceRows.setAll(rowList);
+		aboutButton.setDisable(true);
+	}
+	
     
     public void initPage( User user ) throws SQLException {
     	this.user = user;
     	
     	List<AdRow> rowList = db_a.selectAll();
-    	adRows.setAll(rowList);
+    	annonceRows.setAll(rowList);
 
-        adsTableView.setPlaceholder(new Label("Aucune annonce selon les critères renseignés"));
+        annoncesTableView.setPlaceholder(new Label("Aucune annonce selon les critères renseignés"));
         
-        adRow1.setCellValueFactory( new PropertyValueFactory<AdRow,String>("Localization"));
-        adRow2.setCellValueFactory( new PropertyValueFactory<AdRow,String>("ProfileName"));
-        adRow3.setCellValueFactory( new PropertyValueFactory<AdRow,String>("Type"));
-        adRow4.setCellValueFactory( new PropertyValueFactory<AdRow,String>("Info"));
+        annonceRow1.setCellValueFactory( new PropertyValueFactory<AnnonceRow,String>("Localization"));
+        annonceRow2.setCellValueFactory( new PropertyValueFactory<AnnonceRow,String>("ProfileName"));
+        annonceRow3.setCellValueFactory( new PropertyValueFactory<AnnonceRow,String>("Type"));
+        annonceRow4.setCellValueFactory( new PropertyValueFactory<AnnonceRow,String>("Info"));
         
-        adsTableView.setItems(adRows);
+        annoncesTableView.setItems(annonceRows);
         
-        adsTableView.setRowFactory( a -> {
-            TableRow<AdRow> row = new TableRow<>();
+        annoncesTableView.setRowFactory( a -> {
+            TableRow<AnnonceRow> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
             	if( !row.isEmpty() ) {
-	                AdRow rowData = row.getItem();
-	                selectedAdId = rowData.getAdId();
+	                AnnonceRow rowData = row.getItem();
+	                selectedAdId = ((AdRow)rowData).getAdId();
 	                // Complete la table des avis utilisateur
 					try {
 				    	List<Feedback> fbRowList = db_f.selectByAdId(selectedAdId);
@@ -164,7 +192,11 @@ public class AppController {
 	                }
 	                else if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
 	                	boolean isValidAd = rowData.isMaterial();
-	                	openMaterialForm(isValidAd);
+	                	boolean isRecurrent=false;
+						if (!isValidAd && !(((ServiceRow)rowData).isPonctual())){
+							isRecurrent=true;
+						}
+						openMaterialForm(isValidAd,isRecurrent);
 	                }
             	}
             	else {
@@ -190,14 +222,14 @@ public class AppController {
 		        		rList = db_a.selectAll();
 		        	else
 		        		rList = db_a.selectByKeywords( keywordLine );
-	        		adRows.setAll(rList);
+	        		annonceRows.setAll(rList);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
             }
         });
                
-    	Bindings.bindBidirectional(adsTableView.itemsProperty(), adRowsProperty);
+    	Bindings.bindBidirectional(annoncesTableView.itemsProperty(), annonceRowsProperty);
     	Bindings.bindBidirectional(feedbackTableView.itemsProperty(), feedbackRowsProperty);
 
     }

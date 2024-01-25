@@ -15,7 +15,7 @@ public class JdbcService {
     // Replace below database url, username and password with your actual database credentials
     private static final String INSERT_QUERY = "INSERT INTO Services (UserID,isRequest,Title,Description,CategoryID," +
     		"isAvailable,Localization,Comments,isPonctual,StartDateUTC,EndDateUTC,Day,Hour,Minutes,FCost)" +
-    		"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    		"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Services WHERE ID=?";
     private static final String UPDATE_QUERY = "UPDATE Services SET UserID=?,IsRequest=?,Title=?,Description=?,CategoryID=?" +
     		"isAvailable=?,Localization=?,Comments=?,isPonctual=?,StartDateUTC=?,EndDateUTC=?,Day=?,Hour=?,Minutes=?,FCost=?" +

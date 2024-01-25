@@ -1,12 +1,13 @@
 package eu.telecomnancy.test.base;
 
-public class ServiceRow {
+public class ServiceRow extends AnnonceRow{
 
 	private int serviceId;
 	private String Localization;
 	private String ProfileName;
 	private String Type;
 	private String info;
+	private boolean isPonctual;
 	
 	public int getServiceId() {
 		return serviceId;
@@ -42,13 +43,21 @@ public class ServiceRow {
 		Type = type;
 	}
 
+	public boolean isMaterial(){
+		return false;
+	}
+	public boolean isPonctual() {
+		return isPonctual;
+	}
+
 	
-	public ServiceRow( int sId, String localization, String profileName, String type, String info ) {
+	public ServiceRow( int sId, String localization, String profileName, String type, String info,boolean isPonctual ) {
 		this.serviceId = sId;
 		this.Localization = localization;
 		this.ProfileName = profileName;
 		this.Type = type;
 		this.info = info;
+		this.isPonctual=isPonctual;
 	}
 }
 

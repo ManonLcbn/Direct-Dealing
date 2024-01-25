@@ -5,7 +5,7 @@ import java.time.*;
 import javafx.beans.property.*;
 import javafx.scene.image.Image;
 
-public class Ad {
+public class Ad extends Annonce{
 	
 
 	private int id;

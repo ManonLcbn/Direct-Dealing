@@ -1,6 +1,6 @@
 package eu.telecomnancy.test.base;
 
-public class AdRow {
+public class AdRow extends AnnonceRow{
 
 	private int adId;
 	private boolean isMaterial;

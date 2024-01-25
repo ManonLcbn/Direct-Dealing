@@ -38,7 +38,8 @@ public class JdbcServiceRow {
             			resultSet.getString("Localization"),
             			resultSet.getString("ProfileName"),
             			resultSet.getBoolean("isRequest") ? strType[0] : strType[1],
-            			information.toString());
+            			information.toString(),
+                        resultSet.getBoolean("isPonctual"));
             	rows.add(row);
             }
 
@@ -70,7 +71,8 @@ public class JdbcServiceRow {
                             resultSet.getString("Localization"),
                             resultSet.getString("ProfileName"),
                             resultSet.getBoolean("isRequest") ? strType[0] : strType[1],
-                            resultSet.getString("Title") + " - " + resultSet.getString("Description"));
+                            resultSet.getString("Title") + " - " + resultSet.getString("Description"),
+                            resultSet.getBoolean("isPonctual"));
                     rows.add(row);
                 }
             }
