@@ -14,10 +14,10 @@ public class JdbcUser {
     // Replace below database url, username and password with your actual database credentials
     private static final String SELECT_EXIST_QUERY = "SELECT * FROM Users WHERE email=?";
     private static final String SELECT_QUERY = "SELECT * FROM Users WHERE email=? AND password=?";
-    private static final String INSERT_QUERY = "INSERT INTO Users (name,email,password,isDisable,Availability)" +
-    		"VALUES(?,?,?,?,?)";
+    private static final String INSERT_QUERY = "INSERT INTO Users (name,email,password,isDisable,Availability, Picture)" +
+    		"VALUES(?,?,?,?,?,?)";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Users WHERE ID=?";
-    private static final String UPDATE_QUERY = "UPDATE Users SET name=?, email=?, password=?, isDisable=?, Availability=? " +
+    private static final String UPDATE_QUERY = "UPDATE Users SET name=?, email=?, password=?, isDisable=?, Availability=?, Picture=? " +
     		"WHERE ID = ?";
     
     public boolean isExists(String email) throws SQLException {
@@ -55,7 +55,7 @@ public class JdbcUser {
             ResultSet resultSet = preparedStatement.executeQuery();
             user = new User( resultSet.getInt("ID"), resultSet.getString("Name"), resultSet.getString("Email"),
             		resultSet.getString("Password"), resultSet.getBoolean("isDisable"),
-            		resultSet.getString("Availability"), resultSet.getInt("FAmount") );
+            		resultSet.getString("Availability"), resultSet.getInt("FAmount"), resultSet.getString("Picture"));
             preparedStatement.close();
 
         } catch (SQLException e) {
@@ -79,6 +79,7 @@ public class JdbcUser {
             preparedStatement.setString(3, usr.getPassword());
             preparedStatement.setBoolean(4, usr.isDisable());
             preparedStatement.setString(5, usr.getAvailability());
+            preparedStatement.setString(6, usr.getPicture());
             System.out.println(preparedStatement);
             // execute the preparedstatement insert
             preparedStatement.executeUpdate();
@@ -108,7 +109,8 @@ public class JdbcUser {
             		resultSet.getString("Password"),
             		resultSet.getBoolean("isDisable"),
             		resultSet.getString("Availability"),
-            		resultSet.getInt("FAmount"));
+            		resultSet.getInt("FAmount"),
+                    resultSet.getString("Picture"));
 
         } catch (SQLException e) {
             // print SQL exception information
@@ -126,7 +128,8 @@ public class JdbcUser {
             preparedStatement.setString(3, usr.getPassword());
             preparedStatement.setBoolean(4, usr.isDisable());
             preparedStatement.setString(5, usr.getAvailability());
-            preparedStatement.setInt(6, usr.getId());
+            preparedStatement.setString(6, usr.getPicture());
+            preparedStatement.setInt(7, usr.getId());
             
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();

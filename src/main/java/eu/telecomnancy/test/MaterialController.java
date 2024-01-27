@@ -2,8 +2,6 @@ package eu.telecomnancy.test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,7 +9,6 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -246,10 +243,11 @@ public class MaterialController {
 			// Copiez l'image vers le répertoire de ressources
 			try {
 				if (ad.getPicture().equals("DefaultPicture.jpg")) {
-					System.out.println(ad.getId());
-					byte[] array = new byte[7]; // length is bounded by 7
-					new Random().nextBytes(array);
-					String generatedString = new String(array, StandardCharsets.UTF_8);
+					String generatedString = new Random().ints(48, 123)
+							.filter(i -> (i < 58) || (i > 64 && i < 91) || (i > 96))
+							.limit(16)
+							.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+							.toString();
 					newImageName = generatedString + ".jpg";
 					ad.setPicture(newImageName);
 				}
@@ -258,9 +256,11 @@ public class MaterialController {
 				}
 
 			} catch (NullPointerException e) {
-				byte[] array = new byte[7]; // length is bounded by 7
-				new Random().nextBytes(array);
-				String generatedString = new String(array, StandardCharsets.UTF_8);
+				String generatedString = new Random().ints(48, 123)
+						.filter(i -> (i < 58) || (i > 64 && i < 91) || (i > 96))
+						.limit(16)
+						.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+						.toString();
 				newImageName = generatedString + ".jpg";
 				ad.setPicture(newImageName);
 			}

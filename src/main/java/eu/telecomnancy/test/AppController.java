@@ -69,7 +69,7 @@ public class AppController {
         try {
         	ProfileView page = new ProfileView( user.getId() );
 	        GridPane root = page.loadPage();
-			Scene scene = new Scene(root,750,550);
+			Scene scene = new Scene(root,750,650);
 			
 			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
 			secondaryStage.setTitle("TelecomNancy DirectDealing - Profile");

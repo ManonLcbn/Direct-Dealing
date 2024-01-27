@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" stylesheets="@application.css" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="eu.telecomnancy.test.ProfileController">
+<GridPane alignment="center" hgap="10" stylesheets="@application.css" vgap="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.test.ProfileController">
     <padding>
         <Insets bottom="40" left="40" right="40" top="40" />
     </padding>
@@ -25,6 +33,11 @@
                <Insets bottom="20" left="0" right="0" top="10" />
            </GridPane.margin>
        </Label>
+       <StackPane prefHeight="150.0" onMouseEntered="#showButton" onMouseExited="#hideButton" prefWidth="200.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+           <ImageView fx:id="photoProfile" fitHeight="150.0"
+                      fitWidth="200.0" pickOnBounds="true" preserveRatio="true"/>
+           <Button fx:id="photoButton" visible="false" onAction="#addImage" mnemonicParsing="false" text="Modifier"/>
+       </StackPane>
        <!-- Add Name Label -->
        <Label styleClass="label-bright" text="Nom : " GridPane.columnIndex="0" GridPane.rowIndex="2" />
        <!-- Add Name Text Field -->

@@ -11,6 +11,7 @@ public class User {
 	private BooleanProperty isDisable;
 	private StringProperty availability;
 	private IntegerProperty famount;
+	private String Picture;
 
 	public int getId() {
 		return id;
@@ -91,9 +92,13 @@ public class User {
     public StringProperty nameProperty() {
         return name;
     }
+
+	public String getPicture() {return Picture;}
+
+	public void setPicture(String picture) {this.Picture = picture;}
 	
 	public User( int id, String name, String email, String password, boolean isActive, String Availability,
-			int f_amount )
+			int f_amount, String picture)
 	{
 		this.id = id;
 		this.name = new SimpleStringProperty(this, "name", name);
@@ -102,10 +107,11 @@ public class User {
 		this.isDisable = new SimpleBooleanProperty(this, "isDisable", isActive);
 		this.availability = new SimpleStringProperty(this, "availability", Availability);
 		this.famount = new SimpleIntegerProperty(this, "famount", f_amount);
+		this.Picture = picture;
 	}
 	
 	public User()
 	{
-		this(0,"","","",false,"xxxxxxxxxxxx",150);
+		this(0,"","","",false,"xxxxxxxxxxxx",150, "UserPicture.jpg");
 	}
 }

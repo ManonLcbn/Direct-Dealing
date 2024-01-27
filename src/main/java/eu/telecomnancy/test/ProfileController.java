@@ -1,7 +1,13 @@
 package eu.telecomnancy.test;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +24,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
@@ -26,6 +36,7 @@ public class ProfileController {
 
 	private User user = new User();
 
+    private static final String RESOURCE_FOLDER = "images/";
     @FXML
     private Label titleLabel;
     @FXML
@@ -41,6 +52,10 @@ public class ProfileController {
     @FXML
     private VBox monthCheckboxes;
     @FXML
+    private ImageView photoProfile;
+    @FXML
+    private Button photoButton;
+    @FXML
     private CheckBox cbMonth1;
     @FXML
     private CheckBox cbMonth2;
@@ -54,6 +69,7 @@ public class ProfileController {
     private CheckBox cbMonth6;
     @FXML
     private CheckBox cbMonth7;
+
 
 
 
@@ -107,23 +123,29 @@ public class ProfileController {
 
         if( newProfile ) { // Ajout nouvel utilisateur
             int userId = jdbcUser.insert(user);
+            System.out.println("User ID: " + userId);
             if( userId > 0 ) {
-            	Utils.infBox("Profil enregistré", "Enregistrement");
-            	AppView page = new AppView();
-                try {
+                System.out.println("Checkpoint 1");
+                try{
+                    //Utils.infBox("Profil enregistré", "Enregistrement");
+                    System.out.println("Checkpoint 2");
+                    AppView page = new AppView();
+                    System.out.println("Checkpoint 3");
                 	registerButton.getScene().setRoot(page.loadPage(user));
+                    System.out.println("Checkpoint 4");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }           	
             }
             else
             	Utils.infBox("Erreur lors de l'enregistrement", "Enregistrement");
+            initPage(userId);
         }
         else {  // Modifie les données d'un utilisateur
-        	int ret = Utils.confirmBox("Les données ont été modifiées. Voulez-vous les enregistrer?", "Enregistrement" );
-        	if( ret == JOptionPane.YES_OPTION ) {
+        	//int ret = Utils.confirmBox("Les données ont été modifiées. Voulez-vous les enregistrer?", "Enregistrement" );
+        	//if( ret == JOptionPane.YES_OPTION ) {
         		jdbcUser.update(user);
-        	}
+        	//}
         	owner.hide();
         }
     }
@@ -161,10 +183,81 @@ public class ProfileController {
     	Bindings.bindBidirectional(isDisableCheckbox.selectedProperty(), user.isDisableProperty());
     	Bindings.bindBidirectional(famountField.textProperty(), user.famountProperty(), new NumberStringConverter());
 
+        String path = "src/main/resources/" + RESOURCE_FOLDER + user.getPicture();
+        System.out.println(path);
+        Image image = new Image(new File (path).toURI().toString());
+        photoProfile.setImage(image);
     }
     
 	public static boolean validate(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.matches();
 	}
+
+    @FXML
+    private void showButton(MouseEvent event) {
+        photoButton.setVisible(true);
+    }
+    @FXML
+    private void hideButton(MouseEvent event) {
+        photoButton.setVisible(false);
+    }
+
+    @FXML
+    public void addImage(ActionEvent event) throws SQLException {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Images (*.png, *.jpg, *.jpeg)", "*.png", "*.jpg", "*.jpeg");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Afficher la boîte de dialogue de sélection de fichier
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            // Charger l'image sélectionnée dans l'ImageView
+            copyImageToResources(selectedFile, RESOURCE_FOLDER, selectedFile.getName());
+            Image image = new Image(selectedFile.toURI().toString());
+            photoProfile.setImage(image);
+        }
+    }
+
+    public void copyImageToResources(File sourceImage, String resourcesDirectory, String newImageName) {
+        // Obtenez le chemin vers votre répertoire de ressources
+        String resourcesPath = "src/main/resources/" + resourcesDirectory; // Chemin vers votre répertoire de ressources
+
+
+        try {
+            // Créez le répertoire s'il n'existe pas
+            Files.createDirectories(Paths.get(resourcesPath));
+            // Copiez l'image vers le répertoire de ressources
+            try {
+                if (user.getPicture().equals("UserPicture.jpg")) {
+                    String generatedString = new Random().ints(48, 123)
+                            .filter(i -> (i < 58) || (i > 64 && i < 91) || (i > 96))
+                            .limit(14)
+                            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                            .toString();
+                    newImageName = generatedString + ".jpg";
+                    user.setPicture(newImageName);
+                }
+                else {
+                    newImageName = user.getPicture();
+                }
+
+            } catch (NullPointerException e) {
+                String generatedString = new Random().ints(48, 123)
+                        .filter(i -> (i < 58) || (i > 64 && i < 91) || (i > 96))
+                        .limit(14)
+                        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                        .toString();
+                newImageName = generatedString + ".jpg";
+                user.setPicture(newImageName);
+            }
+            Path destinationPath = Paths.get(resourcesPath, newImageName);
+            Files.copy(sourceImage.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
