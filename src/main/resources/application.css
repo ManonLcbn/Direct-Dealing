@@ -25,14 +25,15 @@
 .hyperlink {
     -fx-font-size: 15pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: chocolate;
+    -fx-text-fill: rgb(48, 26, 11);
     -fx-font-weight: bold;
-    -fx-background-color: rgba(255,255,255,0.5);
+    -fx-background-color: rgba(255,255,255,1);
     -fx-background-radius: 5px;
 }
 
 .hyperlink:hover {
-    -fx-background-color: navy;
+    -fx-background-color: rgb(55, 0, 128);
+    -fx-text-fill: rgb(255, 255, 255);
     -fx-background-radius: 25px;
     -fx-padding: 3;
 }
@@ -40,7 +41,7 @@
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: navy;
+    -fx-text-fill: rgb(55, 0, 128);
     -fx-background-color: rgba(255,255,255,1);
     -fx-background-radius: 5px;
     -fx-padding: 8;
@@ -49,9 +50,9 @@
 .label-header {
     -fx-font-size: 32pt;
     -fx-font-family: "Segoe UI Bold";
-    -fx-text-fill: navy;
+    -fx-text-fill: rgb(55, 0, 128);
     -fx-font-weight: bold;
-    -fx-background-color: rgba(255,255,255,0.8);
+    -fx-background-color: rgba(255,255,255,0.9);
     -fx-background-radius: 20px;
     -fx-padding: 15;
 }
