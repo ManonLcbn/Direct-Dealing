@@ -40,7 +40,7 @@
          </children>
       </HBox>
        <!--  Add categorie Label -->
-       <Label text="Catégorie :" GridPane.rowIndex="4" />
+       <Label styleClass="label-bright" text="Catégorie :" GridPane.rowIndex="4" />
        <ComboBox fx:id="categories" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="422.0" promptText="Sélectionnez une catégorie" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
       <Text fx:id="categoriesText" disable="true" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
        <!-- Add Description Label -->
