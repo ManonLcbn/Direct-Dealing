@@ -3,6 +3,7 @@ package eu.telecomnancy.test.base ;
 import eu.telecomnancy.test.DAO.JdbcUser;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Message {
     private int id;
@@ -11,6 +12,8 @@ public class Message {
     private int subject;
     private String body;
     private LocalDateTime dateUTC;
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     // Constructeurs
 
@@ -49,6 +52,15 @@ public class Message {
         // Appelle la méthode statique dans JdbcUser pour obtenir le nom de l'expéditeur
         String senderName = JdbcUser.getUserNameById(senderID);
         return senderName;
+    }
+
+    public String getFormattedDate() {
+        // Formate la date et l'heure d'envoi du message en tant que chaîne de caractères
+        return dateUTC.format(DATE_TIME_FORMATTER);
+    }
+
+    public boolean isUserSender(int userId) {
+        return this.senderID == userId;
     }
 
 }
