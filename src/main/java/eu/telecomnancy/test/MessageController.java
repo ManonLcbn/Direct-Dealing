@@ -68,7 +68,7 @@ public class MessageController {
     // Méthode pour construire une représentation de chaîne de message
     private String buildMessageString(Message message) {
         // À adapter en fonction de votre structure de message
-        return message.getSender() + ": " + message.getBody();
+        return message.getSenderName() + ": " + message.getBody();
     }
 
     @FXML

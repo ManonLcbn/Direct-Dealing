@@ -19,6 +19,27 @@ public class JdbcUser {
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Users WHERE ID=?";
     private static final String UPDATE_QUERY = "UPDATE Users SET name=?, email=?, password=?, isDisable=?, Availability=?, Picture=? " +
     		"WHERE ID = ?";
+    private static final String SELECT_NAME_BY_ID_QUERY = "SELECT Name FROM Users WHERE ID = ?";
+
+    public static String getUserNameById(int userId) {
+        String userName = null;
+
+        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_NAME_BY_ID_QUERY)) {
+
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                userName = resultSet.getString("Name");
+            }
+
+        } catch (SQLException e) {
+            Utils.printSQLException(e);
+        }
+
+        return userName;
+    }
     
     public boolean isExists(String email) throws SQLException {
 

@@ -1,5 +1,7 @@
 package eu.telecomnancy.test.base ;
 
+import eu.telecomnancy.test.DAO.JdbcUser;
+
 import java.time.LocalDateTime;
 
 public class Message {
@@ -40,5 +42,13 @@ public class Message {
 
     public LocalDateTime getDateUTC(){return this.dateUTC ;}
     public void setDate(LocalDateTime date){this.dateUTC = date ;}
+
+    // Autres
+
+    public String getSenderName() {
+        // Appelle la méthode statique dans JdbcUser pour obtenir le nom de l'expéditeur
+        String senderName = JdbcUser.getUserNameById(senderID);
+        return senderName;
+    }
 
 }
