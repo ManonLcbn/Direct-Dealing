@@ -157,7 +157,7 @@
     -fx-border-width: 2;
     -fx-border-radius: 25px;
     -fx-background-radius: 25px;
-    -fx-background-color: #ff0000;
+    -fx-background-color: #1d1d1d;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
@@ -165,12 +165,12 @@
 }
 
 .button:hover {
-    -fx-background-color: #ff0000;
+    -fx-background-color: #8d8d8d;
     -fx-background-radius: 25px;
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-color: white;
+  -fx-background-color: #e2e2e2;
   -fx-background-radius: 25px;
   -fx-text-fill: #1d1d1d;
 }
