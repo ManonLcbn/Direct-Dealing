@@ -138,6 +138,10 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
+             <Button fx:id="messageButton" mnemonicParsing="false" onAction="#openMessageConversation" prefHeight="40.0" prefWidth="150.0" text="Message">
+                 <cursor>
+                     <Cursor fx:constant="HAND" />
+                 </cursor></Button>
          </children>
       </HBox>
    </children>

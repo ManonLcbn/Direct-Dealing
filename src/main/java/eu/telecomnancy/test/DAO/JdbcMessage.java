@@ -1,65 +1,91 @@
-package eu.telecomnancy.test.DAO;
+package eu.telecomnancy.test.DAO ;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import eu.telecomnancy.test.Utils;
-import eu.telecomnancy.test.base.Message;
+import eu.telecomnancy.test.base.* ;
 
 public class JdbcMessage {
+    private static final String INSERT_QUERY = "INSERT INTO Messages (SenderID, RecipientID, Subject, Body, DateUTC) VALUES (?, ?, ?, ?, ?)";
+    private static final String SELECT_BETWEEN_USERS_QUERY =
+            "SELECT * FROM Messages WHERE (SenderID = ? AND RecipientID = ?) OR (SenderID = ? AND RecipientID = ?) ORDER BY DateUTC";
+    private static final String SELECT_MAX_ID_QUERY = "SELECT MAX(id) FROM Message";
 
-    private static final String INSERT_MESSAGE_QUERY = "INSERT INTO Messages (senderUserId, receiverUserId, subject, messageText, messageDate) VALUES (?, ?, ?, ?, ?)";
-    private static final String SELECT_MESSAGES_QUERY = "SELECT * FROM Messages WHERE (senderUserId = ? AND receiverUserId = ?) OR (senderUserId = ? AND receiverUserId = ?) ORDER BY messageDate DESC";
+    public int insert(Message message) throws SQLException {
+        int messageId = 0;
 
-    public void insertMessage(Message message) throws SQLException {
         try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_MESSAGE_QUERY)) {
-            preparedStatement.setInt(1, message.getSenderUserId());
-            preparedStatement.setInt(2, message.getReceiverUserId());
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setInt(1, message.getSender());
+            preparedStatement.setInt(2, message.getRecipient());
             preparedStatement.setInt(3, message.getSubject());
-            preparedStatement.setString(4, message.getMessageText());
-            preparedStatement.setInt(5, message.getMessageDate());
+            preparedStatement.setString(4, message.getBody());
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(message.getDateUTC()));
 
-            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
+
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if (rs.next()) {
+                messageId = rs.getInt(1);
+                message.setID(messageId);
+            }
         } catch (SQLException e) {
-            // print SQL exception information
             Utils.printSQLException(e);
         }
+
+        return messageId;
     }
 
-    public List<Message> getMessages(int userId1, int userId2) throws SQLException {
+    public static List<Message> getMessagesBetweenUsers(int user1ID, int user2ID) throws SQLException {
         List<Message> messages = new ArrayList<>();
+
         try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_MESSAGES_QUERY)) {
-            preparedStatement.setInt(1, userId1);
-            preparedStatement.setInt(2, userId2);
-            preparedStatement.setInt(3, userId2);
-            preparedStatement.setInt(4, userId1);
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BETWEEN_USERS_QUERY)) {
+            preparedStatement.setInt(1, user1ID);
+            preparedStatement.setInt(2, user2ID);
+            preparedStatement.setInt(3, user2ID);
+            preparedStatement.setInt(4, user1ID);
 
-            System.out.println(preparedStatement);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int messageId = resultSet.getInt("messageId");
-                int senderUserId = resultSet.getInt("senderUserId");
-                int receiverUserId = resultSet.getInt("receiverUserId");
-                int subject = resultSet.getInt("subject");
-                String messageText = resultSet.getString("messageText");
-                int messageDate = resultSet.getInt("messageDate");
 
-                Message message = new Message(messageId, senderUserId, receiverUserId, subject, messageText, messageDate);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                int senderID = resultSet.getInt("SenderID");
+                int recipientID = resultSet.getInt("RecipientID");
+                int subject = resultSet.getInt("Subject");
+                String body = resultSet.getString("Body");
+                LocalDateTime dateUTC = resultSet.getTimestamp("DateUTC").toLocalDateTime();
+
+                Message message = new Message(id, senderID, recipientID, subject, body, dateUTC);
                 messages.add(message);
             }
         } catch (SQLException e) {
+            Utils.printSQLException(e);
+        }
+
+        return messages;
+    }
+
+    public int selectMaxId() throws SQLException {
+        int maxId = 0;
+
+        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_MAX_ID_QUERY)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                maxId = resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
             // print SQL exception information
             Utils.printSQLException(e);
         }
-        return messages;
+
+        return maxId;
     }
 }
