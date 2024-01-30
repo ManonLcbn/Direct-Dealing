@@ -175,7 +175,7 @@ public class ServiceRecurrentController {
 		Stage thirdStage = new Stage();
    		ServicePonctualView page = new ServicePonctualView();
 	    GridPane root = page.loadPage( currentUserId, service.getId(), appController );
-		Scene scene = new Scene(root,800,600);
+		Scene scene = new Scene(root,1200,700);
 		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		thirdStage.setTitle("TelecomNancy DirectDealing - Service");
 		thirdStage.setScene(scene);
