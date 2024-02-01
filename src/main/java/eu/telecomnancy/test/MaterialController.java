@@ -15,9 +15,13 @@ import javax.swing.JOptionPane;
 
 import eu.telecomnancy.test.DAO.JdbcAd;
 import eu.telecomnancy.test.DAO.JdbcMatCat;
+import eu.telecomnancy.test.DAO.JdbcMessage;
+import eu.telecomnancy.test.DAO.JdbcService;
 import eu.telecomnancy.test.DAO.JdbcStandby;
+import eu.telecomnancy.test.DAO.JdbcUser;
 import eu.telecomnancy.test.base.Ad;
 import eu.telecomnancy.test.base.MatCat;
+import eu.telecomnancy.test.base.Message;
 import eu.telecomnancy.test.base.Standby;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -50,7 +54,7 @@ public class MaterialController {
 	private AppController appController;
 	
 	@FXML
-	private Label adInfo;
+	private Label adInfo,reservationLabel;
 	@FXML
 	private RadioButton requestRadiobutton;
 	@FXML
@@ -108,7 +112,7 @@ public class MaterialController {
 
 
 	@FXML
-    private Button addButton, delButton, orderButton, commentButton, addImageButton;
+    private Button addButton, delButton, orderButton, commentButton, addImageButton,accepterReservationButton,refuserReservationButton;
 
 	@FXML
 	public void openMessageConversation() throws IOException {
@@ -143,8 +147,8 @@ public class MaterialController {
 
         Window owner = addButton.getScene().getWindow();
         
-        if( ad.isIsAvailable() ) {
-        	// Materiel non disponible
+        if( !ad.isIsAvailable() ) {
+        	// Service non disponible
         	int ret = JOptionPane.NO_OPTION;
         	// test si l'utilisateur a deja une reservation
             Standby book = new Standby(currentUserId,ad.getId(),LocalDate.now());
@@ -156,32 +160,43 @@ public class MaterialController {
             else {
 	        	JdbcStandby db = new JdbcStandby();
 	        	int total = db.selectCount(ad.getId());
-	            if( total > 1 ) {
-		        	ret = Utils.confirmBox("Il y a déjà " + total + " demandes en attente sur cette proposition.\nSouhaitez-vous être "
-		        			+ "prévu des qu'une disponibilité se présente?", "Proposition non disponible" );
+	            if( total >= 1 ) {
+		        	ret = Utils.confirmBox("Il y a déjà " + total + " réservations sur cette proposition.\nSouhaitez-vous être "
+		        			+ "prévenu dès qu'une disponibilité se présente?", "Proposition non disponible" );
+					if( ret == JOptionPane.YES_OPTION ) {
+						Stage thirdStage = new Stage();
+						try {
+							StbLimitView page = new StbLimitView();
+							GridPane root = page.loadPage(book);
+							Scene scene = new Scene(root,400,200);
+							scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
+							thirdStage.setTitle("Date limite de la demande");
+							thirdStage.setScene(scene);
+							thirdStage.show();          		
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
 	        	}
-	        	else {
-		        	ret = Utils.confirmBox("La proposition n'est plus disponible. Souhaitez-vous être\n"
-		        			+ "prévu des qu'il sera nouveau disponible ?", "Proposition non disponible" );
-	        	}
-	        	if( ret == JOptionPane.YES_OPTION ) {
-	            	Stage thirdStage = new Stage();
-	                try {
-	               		StbLimitView page = new StbLimitView();
-	         	        GridPane root = page.loadPage(book);
-	        			Scene scene = new Scene(root,400,200);
-	        			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
-	        			thirdStage.setTitle("Date limite de la demande");
-	        			thirdStage.setScene(scene);
-	        			thirdStage.show();          		
-	                } catch (IOException e) {
-	                    e.printStackTrace();
-	                }
-	        	}
+	        	
+	        	
             }
         	
         }
-
+		else {
+			int ret = Utils.confirmBox("Souhaitez-vous réserver ce service ?", "Proposition disponible" );
+			if( ret == JOptionPane.YES_OPTION ) {
+				JdbcAd db_ad=new JdbcAd();
+				ad.setIsAvailable(false);
+				db_ad.update(ad);
+				JdbcStandby db_s=new JdbcStandby();
+				db_s.insert(new Standby(currentUserId, ad.getId(), LocalDate.now()));
+				JdbcMessage db_Message=new JdbcMessage();
+				db_Message.insertMessage(new Message(0,currentUserId , ad.getUserId(), 0, "Votre annonce \""+ad.getTitle()+ "\"a été réservée" , (int)Utils.DateTimeToUnixTime(LocalDate.now())));
+				Utils.infBox("Réservation confirmée, l'auteur de l'annonce vous contactera", "Réservation confirmée");
+			}
+		}
+		
        	owner.hide();
     }
 
@@ -271,6 +286,44 @@ public class MaterialController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	public void accepterReservation(ActionEvent event) throws SQLException{
+		JdbcStandby db_standby=new JdbcStandby();
+		int firstStandby=db_standby.firstStandBy(ad.getId());
+		db_standby.updateAccepted(ad.getId(),firstStandby);
+		JdbcUser db_user=new JdbcUser();
+		String name=(db_user.selectByID(firstStandby)).getName();
+		reservationLabel.setText(name+"utilise votre matériel");
+		accepterReservationButton.setVisible(false);
+		refuserReservationButton.setVisible(false);
+		JdbcMessage db_Message=new JdbcMessage();
+		db_Message.insertMessage(new Message(0,currentUserId , firstStandby, 0, "Votre réservation pour l'annonce\""+ad.getTitle()+ "\"a été acceptée" , (int)Utils.DateTimeToUnixTime(LocalDate.now())));
+	}
+
+	@FXML
+	public void refuserReservation(ActionEvent event) throws SQLException{
+		JdbcStandby db_standby=new JdbcStandby();
+		int firstStandby=db_standby.firstStandBy(ad.getId());
+		db_standby.deleteFirst(ad.getId());
+		JdbcMessage db_Message=new JdbcMessage();
+		db_Message.insertMessage(new Message(0,currentUserId , firstStandby, 0, "Votre réservation pour l'annonce\""+ad.getTitle()+ "\"a été refusée" , (int)Utils.DateTimeToUnixTime(LocalDate.now())));
+		if (db_standby.selectCount(ad.getId())>=1){
+			firstStandby=db_standby.firstStandBy(ad.getId());
+			JdbcUser db_user=new JdbcUser();
+			String name=(db_user.selectByID(firstStandby)).getName();
+			reservationLabel.setText(name+"veut réserver votre matériel");
+		}
+		else {
+			JdbcAd db_ad=new JdbcAd();
+			ad.setIsAvailable(true);
+			db_ad.update(ad);
+			reservationLabel.setText(null);
+			accepterReservationButton.setVisible(false);
+			refuserReservationButton.setVisible(false);
+		}
+
 	}
 
     public void initPage( int userId, int adId, AppController appController ) throws SQLException {
@@ -423,6 +476,9 @@ public class MaterialController {
 			enddateField.setVisible(false);
 			endDateText.setVisible(true);
 			radioButtonHbox.setVisible(false);
+			reservationLabel.setVisible(false);
+			accepterReservationButton.setVisible(false);
+			refuserReservationButton.setVisible(false);
     	}
     	else if( !this.isNewAd ) {
 			// L'utilisateur est le proprietaire de l'annonce
@@ -439,6 +495,23 @@ public class MaterialController {
 			endDateText.setVisible(false);
 			nombreDeJoursText.setVisible(false);
 			commentairesText.setVisible(false);
+			JdbcStandby db_standby=new JdbcStandby();
+			if (db_standby.selectCount(adId)>=1){
+				int firstStandby=db_standby.firstStandBy(adId);
+				JdbcUser db_user=new JdbcUser();
+				String name=(db_user.selectByID(firstStandby)).getName();
+				if (db_standby.firstIsAccepted(adId)){
+					reservationLabel.setText(name+"utilise votre matériel");
+					accepterReservationButton.setVisible(false);
+					refuserReservationButton.setVisible(false);
+				}
+				reservationLabel.setText(name+"veut réserver votre matériel");
+			}
+			else {
+				reservationLabel.setText(null);
+				accepterReservationButton.setVisible(false);
+				refuserReservationButton.setVisible(false);
+			}
 		}
     }
 }
