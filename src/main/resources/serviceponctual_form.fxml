@@ -54,15 +54,15 @@
        <Label text="Commentaires :" GridPane.rowIndex="8" GridPane.valignment="TOP" />
        <TextArea fx:id="commentsField" prefHeight="200.0" prefWidth="200.0" promptText="Remarques éventuelles" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="8" />
       
-       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="14">
+       <HBox alignment="CENTER" prefHeight="100.0" spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="14">
          <children>
          	<!-- Add Button -->
-             <Button fx:id="addButton" defaultButton="true" onAction="#addService" prefHeight="40" prefWidth="100" text="Enregistrer">
+             <Button fx:id="addButton" defaultButton="true" onAction="#addService" prefHeight="40" text="Enregistrer">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
          	<!-- Del Button -->
-            <Button fx:id="delButton" defaultButton="true" disable="true" onAction="#delService" prefHeight="40" prefWidth="100" text="Supprimer">
+            <Button fx:id="delButton" defaultButton="true" disable="true" onAction="#delService" prefHeight="40" text="Supprimer">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
@@ -91,18 +91,18 @@
       <Label fx:id="serviceInfo" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="14">
          <children>
-            <Button fx:id="orderButton" disable="true" mnemonicParsing="false" onAction="#bookService" prefHeight="40.0" prefWidth="100.0" text="Réserver">
+            <Button fx:id="orderButton" disable="true" mnemonicParsing="false" onAction="#bookService" prefHeight="40.0" text="Réserver">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button fx:id="commentButton" mnemonicParsing="false" onAction="#commentAd" prefHeight="40.0" prefWidth="100.0" text="Commenter">
+            <Button fx:id="commentButton" mnemonicParsing="false" onAction="#commentAd" prefHeight="40.0" text="Commenter">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
          </children>
       </HBox>
       <Label text="Répétition :" GridPane.rowIndex="3" />
-      <HBox layoutX="160.0" layoutY="88.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <HBox layoutX="160.0" layoutY="88.0" spacing="30.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
          <children>
             <RadioButton mnemonicParsing="false" selected="true" text="Ponctuel">
                <toggleGroup>
@@ -138,7 +138,7 @@
       <Button fx:id="refuserReservationButton" mnemonicParsing="false" onAction="#refuserReservation" text="Refuser" GridPane.columnIndex="5" GridPane.rowIndex="12" />
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="207.0" GridPane.columnIndex="4" GridPane.rowIndex="9">
          <children>
-            <Label prefHeight="18.0" prefWidth="43.0" text="Heure :">
+            <Label prefHeight="18.0" text="Heure :">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
