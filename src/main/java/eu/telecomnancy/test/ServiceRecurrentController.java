@@ -37,6 +37,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
+import java.time.LocalDateTime;
+
 
 public class ServiceRecurrentController {
     private Service service = null;
@@ -143,7 +145,7 @@ public class ServiceRecurrentController {
 				JdbcStandby db_s=new JdbcStandby();
 				db_s.insert(new Standby(currentUserId, service.getId(), LocalDate.now()));
 				JdbcMessage db_Message=new JdbcMessage();
-				db_Message.insertMessage(new Message(0,currentUserId , service.getUserId(), 0, "Votre annonce \""+service.getTitle()+ "\"a été réservée" , (int)Utils.DateTimeToUnixTime(LocalDate.now())));
+				db_Message.insert(new Message(0,currentUserId , service.getUserId(), 1, "Votre annonce \""+service.getTitle()+ "\"a été réservée" , LocalDateTime.now()));
 				Utils.infBox("Réservation confirmée, l'auteur de l'annonce vous contactera", "Réservation confirmée");
 			}
 		}
@@ -207,7 +209,7 @@ public class ServiceRecurrentController {
 		accepterReservationButton.setVisible(false);
 		refuserReservationButton.setVisible(false);
 		JdbcMessage db_Message=new JdbcMessage();
-		db_Message.insertMessage(new Message(0,currentUserId , firstStandby, 0, "Votre réservation pour l'annonce\""+service.getTitle()+ "\"a été acceptée" , (int)Utils.DateTimeToUnixTime(LocalDate.now())));
+		db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce\""+service.getTitle()+ "\"a été acceptée" , LocalDateTime.now()));
 	}
 
 	@FXML
@@ -216,7 +218,7 @@ public class ServiceRecurrentController {
 		int firstStandby=db_standby.firstStandBy(service.getId());
 		db_standby.deleteFirst(service.getId());
 		JdbcMessage db_Message=new JdbcMessage();
-		db_Message.insertMessage(new Message(0,currentUserId , firstStandby, 0, "Votre réservation pour l'annonce\""+service.getTitle()+ "\"a été refusée" , (int)Utils.DateTimeToUnixTime(LocalDate.now())));
+		db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce\""+service.getTitle()+ "\"a été refusée" ,LocalDateTime.now()));
 		if (db_standby.selectCount(service.getId())>=1){
 			firstStandby=db_standby.firstStandBy(service.getId());
 			JdbcUser db_user=new JdbcUser();

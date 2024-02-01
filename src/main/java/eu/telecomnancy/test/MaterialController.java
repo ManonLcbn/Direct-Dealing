@@ -41,6 +41,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
+import java.time.LocalDateTime;
+
 
 
 public class MaterialController {
@@ -192,7 +194,7 @@ public class MaterialController {
 				JdbcStandby db_s=new JdbcStandby();
 				db_s.insert(new Standby(currentUserId, ad.getId(), LocalDate.now()));
 				JdbcMessage db_Message=new JdbcMessage();
-				db_Message.insertMessage(new Message(0,currentUserId , ad.getUserId(), 0, "Votre annonce \""+ad.getTitle()+ "\"a été réservée" , (int)Utils.DateTimeToUnixTime(LocalDate.now())));
+				db_Message.insert(new Message(0,currentUserId , ad.getUserId(), 1, "Votre annonce \""+ad.getTitle()+ "\"a été réservée" , LocalDateTime.now()));
 				Utils.infBox("Réservation confirmée, l'auteur de l'annonce vous contactera", "Réservation confirmée");
 			}
 		}
@@ -299,7 +301,7 @@ public class MaterialController {
 		accepterReservationButton.setVisible(false);
 		refuserReservationButton.setVisible(false);
 		JdbcMessage db_Message=new JdbcMessage();
-		db_Message.insertMessage(new Message(0,currentUserId , firstStandby, 0, "Votre réservation pour l'annonce\""+ad.getTitle()+ "\"a été acceptée" , (int)Utils.DateTimeToUnixTime(LocalDate.now())));
+		db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce\""+ad.getTitle()+ "\"a été acceptée" , LocalDateTime.now()));
 	}
 
 	@FXML
@@ -308,7 +310,7 @@ public class MaterialController {
 		int firstStandby=db_standby.firstStandBy(ad.getId());
 		db_standby.deleteFirst(ad.getId());
 		JdbcMessage db_Message=new JdbcMessage();
-		db_Message.insertMessage(new Message(0,currentUserId , firstStandby, 0, "Votre réservation pour l'annonce\""+ad.getTitle()+ "\"a été refusée" , (int)Utils.DateTimeToUnixTime(LocalDate.now())));
+		db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce\""+ad.getTitle()+ "\"a été refusée" , LocalDateTime.now()));
 		if (db_standby.selectCount(ad.getId())>=1){
 			firstStandby=db_standby.firstStandBy(ad.getId());
 			JdbcUser db_user=new JdbcUser();
