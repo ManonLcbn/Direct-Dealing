@@ -15,10 +15,10 @@ public class JdbcStandby {
     private static final String SELECT_QUERY = "SELECT COUNT(*) AS total FROM Standby WHERE AdID=?";
     private static final String INSERT_QUERY = "INSERT INTO Standby (UserId,AdId,StartDateUTC,EndDateUTC) VALUES(?,?,?,?)";
     private static final String SELECT_EXIST_QUERY = "SELECT * FROM Standby WHERE UserID=? AND AdID=?";
-    private static final String SELECT_FIRST_QUERY="SELECT * FROM Standby LIMIT 1 WHERE AdId=?";
-    private static final String DELETE_FIRST_QUERY="DELETE * FROM Standvy LIMIT 1 WHERE AdId=?";
-    private static final String SELECT_ACCEPTED_FIRST_QUERY="SELECT Accepted FROM Standby LIMIT 1 WHERE AdId=?";
-    private static final String UPDATE_ACCEPTED_QUERY="UPDATE Standby SET Accepted=1 WHERE AdId=? AND AdId=?";
+    private static final String SELECT_FIRST_QUERY="SELECT * FROM Standby WHERE AdID=? LIMIT 1";
+    private static final String DELETE_FIRST_QUERY="DELETE * FROM Standby WHERE AdID=? LIMIT 1";
+    private static final String SELECT_ACCEPTED_FIRST_QUERY="SELECT Accepted FROM Standby WHERE AdID=? LIMIT 1";
+    private static final String UPDATE_ACCEPTED_QUERY="UPDATE Standby SET Accepted=1 WHERE AdID=? AND UserID=?";
 
     public int selectCount( int adId ) throws SQLException {
    	
@@ -75,18 +75,18 @@ public class JdbcStandby {
     }
 
     public int firstStandBy(int adId) throws SQLException{
-        int first=0;
-        try (Connection connection=DriverManager.getConnection(Utils.DATABASE_URL);
-            PreparedStatement preparedStatement=connection.prepareStatement(SELECT_FIRST_QUERY)){
-                preparedStatement.setInt(1,adId);
-                ResultSet resultSet=preparedStatement.executeQuery();
-                first=resultSet.getInt("UserID");
-                preparedStatement.close();
-            }
-            catch (SQLException e) {
-                Utils.printSQLException(e);
-            }
-            return first;
+        int first = 0;
+        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FIRST_QUERY) ) {
+            preparedStatement.setInt(1, adId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            first = resultSet.getInt("UserID");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            Utils.printSQLException(e);
+        }
+        return first;
     }
 
     public void deleteFirst(int adId) throws SQLException{

@@ -99,6 +99,9 @@ public class ServiceRecurrentController {
     public void bookService(ActionEvent event) throws SQLException {
 
         Window owner = addButton.getScene().getWindow();
+		
+		JdbcUser db_user=new JdbcUser();
+		int amount=db_user.selectAmountByID(currentUserId);
         
         if( !service.isIsAvailable() ) {
         	// Service non disponible
@@ -117,18 +120,24 @@ public class ServiceRecurrentController {
 		        	ret = Utils.confirmBox("Il y a déjà " + total + " réservations sur cette proposition.\nSouhaitez-vous être "
 		        			+ "prévenu dès qu'une disponibilité se présente?", "Proposition non disponible" );
 					if( ret == JOptionPane.YES_OPTION ) {
-						Stage thirdStage = new Stage();
-						try {
-							StbLimitView page = new StbLimitView();
-							GridPane root = page.loadPage(book);
-							Scene scene = new Scene(root,400,200);
-							scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
-							thirdStage.setTitle("Date limite de la demande");
-							thirdStage.setScene(scene);
-							thirdStage.show();          		
-						} catch (IOException e) {
-							e.printStackTrace();
+						if (amount-service.getCost()<0){
+							Utils.infBox("Vous ne disposez pas d'assez de florains pour réserver cette annonce", "Florains insuffisants");
 						}
+						else {
+							Stage thirdStage = new Stage();
+							try {
+								StbLimitView page = new StbLimitView();
+								GridPane root = page.loadPage(book);
+								Scene scene = new Scene(root,400,200);
+								scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
+								thirdStage.setTitle("Date limite de la demande");
+								thirdStage.setScene(scene);
+								thirdStage.show();          		
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+						
 					}
 	        	}
 	        	
@@ -139,15 +148,21 @@ public class ServiceRecurrentController {
 		else {
 			int ret = Utils.confirmBox("Souhaitez-vous réserver ce service ?", "Proposition disponible" );
 			if( ret == JOptionPane.YES_OPTION ) {
-				JdbcService db_service=new JdbcService();
-				service.setIsAvailable(false);
-				db_service.update(service);
-				JdbcStandby db_s=new JdbcStandby();
-				db_s.insert(new Standby(currentUserId, service.getId(), LocalDate.now()));
-				JdbcMessage db_Message=new JdbcMessage();
-				db_Message.insert(new Message(0,currentUserId , service.getUserId(), 1, "Votre annonce \""+service.getTitle()+ "\"a été réservée" , LocalDateTime.now()));
-				Utils.infBox("Réservation confirmée, l'auteur de l'annonce vous contactera", "Réservation confirmée");
-			}
+				if (amount-service.getCost()<0){
+					Utils.infBox("Vous ne disposez pas d'assez de florains pour réserver cette annonce", "Florains insuffisants");
+				}
+				else {
+					JdbcService db_service=new JdbcService();
+					service.setIsAvailable(false);
+					db_service.update(service);
+					JdbcStandby db_s=new JdbcStandby();
+					db_s.insert(new Standby(currentUserId, service.getId(), LocalDate.now()));
+					JdbcMessage db_Message=new JdbcMessage();
+					db_Message.insert(new Message(0,currentUserId , service.getUserId(), 1, "Votre annonce \""+service.getTitle()+ "\"a été réservée" , LocalDateTime.now()));
+					Utils.infBox("Réservation confirmée, l'auteur de l'annonce vous contactera", "Réservation confirmée");
+				
+				}
+				}
 		}
 		
        	owner.hide();
@@ -205,11 +220,13 @@ public class ServiceRecurrentController {
 		db_standby.updateAccepted(service.getId(),firstStandby);
 		JdbcUser db_user=new JdbcUser();
 		String name=(db_user.selectByID(firstStandby)).getName();
-		reservationLabel.setText(name+"utilise votre service");
+		reservationLabel.setText(name+" utilise votre service");
 		accepterReservationButton.setVisible(false);
 		refuserReservationButton.setVisible(false);
 		JdbcMessage db_Message=new JdbcMessage();
 		db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce\""+service.getTitle()+ "\"a été acceptée" , LocalDateTime.now()));
+		db_user.updateFlorains(firstStandby, -service.getCost());
+		db_user.updateFlorains(service.getUserId(), service.getCost());
 	}
 
 	@FXML
@@ -223,7 +240,7 @@ public class ServiceRecurrentController {
 			firstStandby=db_standby.firstStandBy(service.getId());
 			JdbcUser db_user=new JdbcUser();
 			String name=(db_user.selectByID(firstStandby)).getName();
-			reservationLabel.setText(name+"veut réserver votre service");
+			reservationLabel.setText(name+" veut réserver votre service");
 		}
 		else {
 			JdbcService db_service=new JdbcService();
@@ -339,11 +356,13 @@ public class ServiceRecurrentController {
 				JdbcUser db_user=new JdbcUser();
 				String name=(db_user.selectByID(firstStandby)).getName();
 				if (db_standby.firstIsAccepted(serviceId)){
-					reservationLabel.setText(name+"utilise votre service");
+					reservationLabel.setText(name+" utilise votre service");
 					accepterReservationButton.setVisible(false);
 					refuserReservationButton.setVisible(false);
 				}
-				reservationLabel.setText(name+"veut réserver votre service");
+				else {
+					reservationLabel.setText(name+" veut réserver votre service");
+				}
 			}
 			else {
 				reservationLabel.setText(null);

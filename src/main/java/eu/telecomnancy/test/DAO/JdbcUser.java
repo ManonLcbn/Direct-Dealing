@@ -20,6 +20,7 @@ public class JdbcUser {
     private static final String UPDATE_QUERY = "UPDATE Users SET name=?, email=?, password=?, isDisable=?, Availability=?, Picture=? " +
     		"WHERE ID = ?";
     private static final String SELECT_NAME_BY_ID_QUERY = "SELECT Name FROM Users WHERE ID = ?";
+    private static final String UPDATE_FLORAINS_QUERY="UPDATE Users SET FAmount=? WHERE ID=?";
 
     public static String getUserNameById(int userId) {
         String userName = null;
@@ -153,6 +154,39 @@ public class JdbcUser {
             preparedStatement.setInt(7, usr.getId());
             
             System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            // print SQL exception information
+        	Utils.printSQLException(e);
+        }
+    }
+
+    public int selectAmountByID(int userID){
+        int amount=0;
+
+        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY)) {
+
+            preparedStatement.setInt(1, userID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                amount = resultSet.getInt("FAmount");
+            }
+
+        } catch (SQLException e) {
+            Utils.printSQLException(e);
+        }
+        return amount;
+    }
+    
+    public void updateFlorains(int userID,int changeAmount){
+        int amount=selectAmountByID(userID);
+        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FLORAINS_QUERY) ) {
+            preparedStatement.setInt(1, amount+changeAmount);
+            preparedStatement.setInt(2,userID);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
