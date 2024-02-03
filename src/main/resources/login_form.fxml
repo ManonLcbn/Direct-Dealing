@@ -15,49 +15,50 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Button?>
 
-<GridPane styleClass="rootconnexion" alignment="center" hgap="10" stylesheets="@application.css" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="eu.telecomnancy.test.LoginController">
+<GridPane styleClass="rootconnexion" alignment="center" hgap="10" stylesheets="@application.css" vgap="10"
+          xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+          fx:controller="eu.telecomnancy.test.LoginController">
     <padding>
-        <Insets bottom="40" left="40" right="40" top="40" />
+        <Insets bottom="40" left="40" right="40" top="40"/>
     </padding>
     <columnConstraints>
-        <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" minWidth="100" />
-        <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="200" prefWidth="200" />
+        <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" minWidth="100"/>
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="200" prefWidth="200"/>
     </columnConstraints>
-   <children>
-       <!-- Add Header Label -->
-       <Label styleClass="connexionlabel-header" text="Connexion à DirectDealing" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.rowSpan="1">
-           <font>
-               <Font name="Arial" size="50" />
-           </font>
-           <GridPane.margin>
-               <Insets bottom="20" left="0" right="0" top="20" />
-           </GridPane.margin>
-       </Label>
-       <!-- Add Email Label -->
-       <Label styleClass="connexionlabel-bright" text="Email : " GridPane.columnIndex="0" GridPane.rowIndex="2" />
-       <!-- Add Email Text Field -->
-       <TextField fx:id="emailIdField" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-       <!-- Add Password Label -->
-       <Label styleClass="connexionlabel-bright" text="Mot de passe : " GridPane.columnIndex="0" GridPane.rowIndex="3" />
-       <!-- Add Password Field -->
-       <PasswordField fx:id="passwordField" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-       <!-- Add Submit Button -->
-       <Button fx:id="submitButton" defaultButton="true" onAction="#login" prefHeight="40" text="Connexion" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.rowSpan="1">
-           <GridPane.margin>
-               <Insets bottom="20" left="0" right="0" top="20" />
-           </GridPane.margin>
-       </Button>
-       <!-- Add new account -->
-       <Hyperlink fx:id="newProfileLink" onAction="#newAccount" text="Créer un compte utilisateur" GridPane.columnIndex="1" GridPane.rowIndex="5">
-    </Hyperlink>
-   </children>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
-    
+    <rowConstraints>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+    </rowConstraints>
+
+    <!-- Add Header Label -->
+    <Label styleClass="connexionlabel-header" text="Connexion à DirectDealing" GridPane.columnIndex="0"
+           GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.rowSpan="1">
+        <GridPane.margin>
+            <Insets bottom="20" left="0" right="0" top="20"/>
+        </GridPane.margin>
+    </Label>
+    <!-- Add Email Label -->
+    <Label styleClass="connexionlabel-bright" text="Email : " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <!-- Add Email Text Field -->
+    <TextField fx:id="emailIdField" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <!-- Add Password Label -->
+    <Label styleClass="connexionlabel-bright" text="Mot de passe : " GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <!-- Add Password Field -->
+    <PasswordField fx:id="passwordField" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <!-- Add Submit Button -->
+    <Button fx:id="submitButton" defaultButton="true" onAction="#login" prefHeight="40" text="Connexion"
+            GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4"
+            GridPane.rowSpan="1">
+        <GridPane.margin>
+            <Insets bottom="20" left="0" right="0" top="20"/>
+        </GridPane.margin>
+    </Button>
+    <!-- Add new account -->
+    <Hyperlink fx:id="newProfileLink" onAction="#newAccount" text="Créer un compte utilisateur" GridPane.columnIndex="1"
+               GridPane.rowIndex="5">
+ </Hyperlink>
 </GridPane>

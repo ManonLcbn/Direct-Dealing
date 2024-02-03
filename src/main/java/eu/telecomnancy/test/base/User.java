@@ -12,6 +12,7 @@ public class User {
 	private StringProperty availability;
 	private IntegerProperty famount;
 	private String Picture;
+	private Integer admin;
 
 	public int getId() {
 		return id;
@@ -96,9 +97,13 @@ public class User {
 	public String getPicture() {return Picture;}
 
 	public void setPicture(String picture) {this.Picture = picture;}
+
+	public Integer getAdmin() {return admin;}
+
+	public void setAdmin(Integer admin) {this.admin = admin;}
 	
 	public User( int id, String name, String email, String password, boolean isActive, String Availability,
-			int f_amount, String picture)
+			int f_amount, String picture, int admin)
 	{
 		this.id = id;
 		this.name = new SimpleStringProperty(this, "name", name);
@@ -108,10 +113,11 @@ public class User {
 		this.availability = new SimpleStringProperty(this, "availability", Availability);
 		this.famount = new SimpleIntegerProperty(this, "famount", f_amount);
 		this.Picture = picture;
+		this.admin = admin;
 	}
 	
 	public User()
 	{
-		this(0,"","","",false,"xxxxxxxxxxxx",150, "UserPicture.jpg");
+		this(0,"","","",false,"xxxxxxxxxxxx",150, "UserPicture.jpg", 0);
 	}
 }

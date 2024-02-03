@@ -13,16 +13,8 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
-import eu.telecomnancy.test.DAO.JdbcAd;
-import eu.telecomnancy.test.DAO.JdbcMatCat;
-import eu.telecomnancy.test.DAO.JdbcMessage;
-import eu.telecomnancy.test.DAO.JdbcService;
-import eu.telecomnancy.test.DAO.JdbcStandby;
-import eu.telecomnancy.test.DAO.JdbcUser;
-import eu.telecomnancy.test.base.Ad;
-import eu.telecomnancy.test.base.MatCat;
-import eu.telecomnancy.test.base.Message;
-import eu.telecomnancy.test.base.Standby;
+import eu.telecomnancy.test.DAO.*;
+import eu.telecomnancy.test.base.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -220,17 +212,25 @@ public class MaterialController {
     @FXML
     public void addMaterial(ActionEvent event) throws SQLException {
 
-        Window owner = addButton.getScene().getWindow();
+		if (addButton.getText().equals("Signaler")) {
+			int signaleur = currentUserId;
+			int signale = ad.getUserId();
+			int annonce = ad.getId();
+			JdbcSignalement db = new JdbcSignalement();
+			db.insert(new Signalement(0, "Annonce " + annonce +  " de l'utilisateur " + signale + " signalée par " + signaleur));
+		}
+		else {
+			Window owner = addButton.getScene().getWindow();
 
-        JdbcAd db_a = new JdbcAd();
-    	if( this.isNewAd ) {
-	       	db_a.insert(ad);
-    	}
-    	else {
-    		db_a.update(ad);
-    	}
-       	appController.refreshTableView();
-       	owner.hide();
+			JdbcAd db_a = new JdbcAd();
+			if (this.isNewAd) {
+				db_a.insert(ad);
+			} else {
+				db_a.update(ad);
+			}
+			appController.refreshTableView();
+			owner.hide();
+		}
     }
 
     @FXML
@@ -430,7 +430,7 @@ public class MaterialController {
     	if( userId != ad.getUserId() ) {
 			// L'utilisateur n'est pas le proprietaire de l'annonce
 
-    		addButton.setVisible( false );
+    		addButton.setText("Signaler");
     		orderButton.setDisable( false );
 			commentButton.setDisable( false );
 			addImageButton.setVisible(false);

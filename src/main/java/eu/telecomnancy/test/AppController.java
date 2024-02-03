@@ -7,11 +7,8 @@ import java.util.List;
 import eu.telecomnancy.test.DAO.JdbcAdRow;
 import eu.telecomnancy.test.DAO.JdbcFeedback;
 import eu.telecomnancy.test.DAO.JdbcServiceRow;
-import eu.telecomnancy.test.base.AdRow;
-import eu.telecomnancy.test.base.ServiceRow;
-import eu.telecomnancy.test.base.AnnonceRow;
-import eu.telecomnancy.test.base.Feedback;
-import eu.telecomnancy.test.base.User;
+import eu.telecomnancy.test.DAO.JdbcSignalement;
+import eu.telecomnancy.test.base.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
@@ -42,7 +39,8 @@ public class AppController {
 	private Property<ObservableList<AnnonceRow>> annonceRowsProperty = new SimpleObjectProperty<>(annonceRows); 
 	private JdbcFeedback db_f = new JdbcFeedback();
 	private ObservableList<Feedback> feedbackRows = FXCollections.observableArrayList();
-	private Property<ObservableList<Feedback>> feedbackRowsProperty = new SimpleObjectProperty<>(feedbackRows); 
+	private Property<ObservableList<Feedback>> feedbackRowsProperty = new SimpleObjectProperty<>(feedbackRows);
+	private JdbcSignalement db_signalement = new JdbcSignalement();
 
 
     @FXML
@@ -62,6 +60,10 @@ public class AppController {
     private TableView<Feedback> feedbackTableView;
     @FXML
     private TableColumn<Feedback,String> fbRow1, fbRow2, fbRow3;
+	@FXML
+	private TableView<Signalement> signalementTableView;
+	@FXML
+	private TableColumn<Signalement, String> contenuSignalement;
     
     @FXML
     public void viewProfile(ActionEvent event) {
@@ -69,7 +71,7 @@ public class AppController {
         try {
         	ProfileView page = new ProfileView( user.getId() );
 	        GridPane root = page.loadPage();
-			Scene scene = new Scene(root,750,650);
+			Scene scene = new Scene(root,850,750);
 			
 			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
 			secondaryStage.setTitle("TelecomNancy DirectDealing - Profile");
@@ -228,9 +230,18 @@ public class AppController {
 				}
             }
         });
-               
-    	Bindings.bindBidirectional(annoncesTableView.itemsProperty(), annonceRowsProperty);
+
+		List<Signalement> signalements = db_signalement.selectAll();
+		signalementTableView.setItems(FXCollections.observableArrayList(signalements));
+		contenuSignalement.setCellValueFactory(new PropertyValueFactory<Signalement, String>("description"));
+		signalementTableView.setVisible(user.getAdmin() == 1);
+
+
+
+
+		Bindings.bindBidirectional(annoncesTableView.itemsProperty(), annonceRowsProperty);
     	Bindings.bindBidirectional(feedbackTableView.itemsProperty(), feedbackRowsProperty);
+		Bindings.bindBidirectional(signalementTableView.itemsProperty(), new SimpleObjectProperty<>(FXCollections.observableArrayList(signalements)));
 
     }
     

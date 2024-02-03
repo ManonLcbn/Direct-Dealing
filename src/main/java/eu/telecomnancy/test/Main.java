@@ -14,7 +14,7 @@ public class Main extends Application {
 			LoginView page = new LoginView();
 
 			GridPane root = page.loadPage();
-			Scene scene = new Scene(root,800,600);
+			Scene scene = new Scene(root,850,750);
 			
 			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
 			primaryStage.setTitle("TelecomNancy DirectDealing");

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import eu.telecomnancy.test.Utils;
 import eu.telecomnancy.test.base.User;
@@ -14,10 +16,10 @@ public class JdbcUser {
     // Replace below database url, username and password with your actual database credentials
     private static final String SELECT_EXIST_QUERY = "SELECT * FROM Users WHERE email=?";
     private static final String SELECT_QUERY = "SELECT * FROM Users WHERE email=? AND password=?";
-    private static final String INSERT_QUERY = "INSERT INTO Users (name,email,password,isDisable,Availability, Picture)" +
-    		"VALUES(?,?,?,?,?,?)";
+    private static final String INSERT_QUERY = "INSERT INTO Users (name,email,password,isDisable,Availability, Picture, admin)" +
+    		"VALUES(?,?,?,?,?,?,?)";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Users WHERE ID=?";
-    private static final String UPDATE_QUERY = "UPDATE Users SET name=?, email=?, password=?, isDisable=?, Availability=?, Picture=? " +
+    private static final String UPDATE_QUERY = "UPDATE Users SET name=?, email=?, password=?, isDisable=?, Availability=?, Picture=?, admin=? " +
     		"WHERE ID = ?";
     private static final String SELECT_NAME_BY_ID_QUERY = "SELECT Name FROM Users WHERE ID = ?";
     private static final String UPDATE_FLORAINS_QUERY="UPDATE Users SET FAmount=? WHERE ID=?";
@@ -77,7 +79,7 @@ public class JdbcUser {
             ResultSet resultSet = preparedStatement.executeQuery();
             user = new User( resultSet.getInt("ID"), resultSet.getString("Name"), resultSet.getString("Email"),
             		resultSet.getString("Password"), resultSet.getBoolean("isDisable"),
-            		resultSet.getString("Availability"), resultSet.getInt("FAmount"), resultSet.getString("Picture"));
+            		resultSet.getString("Availability"), resultSet.getInt("FAmount"), resultSet.getString("Picture"), resultSet.getInt("admin"));
             preparedStatement.close();
 
         } catch (SQLException e) {
@@ -102,6 +104,7 @@ public class JdbcUser {
             preparedStatement.setBoolean(4, usr.isDisable());
             preparedStatement.setString(5, usr.getAvailability());
             preparedStatement.setString(6, usr.getPicture());
+            preparedStatement.setInt(7, usr.getAdmin());
             System.out.println(preparedStatement);
             // execute the preparedstatement insert
             preparedStatement.executeUpdate();
@@ -132,7 +135,8 @@ public class JdbcUser {
             		resultSet.getBoolean("isDisable"),
             		resultSet.getString("Availability"),
             		resultSet.getInt("FAmount"),
-                    resultSet.getString("Picture"));
+                    resultSet.getString("Picture"),
+                    resultSet.getInt("admin"));
 
         } catch (SQLException e) {
             // print SQL exception information
@@ -151,7 +155,8 @@ public class JdbcUser {
             preparedStatement.setBoolean(4, usr.isDisable());
             preparedStatement.setString(5, usr.getAvailability());
             preparedStatement.setString(6, usr.getPicture());
-            preparedStatement.setInt(7, usr.getId());
+            preparedStatement.setInt(7, usr.getAdmin());
+            preparedStatement.setInt(8, usr.getId());
             
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
@@ -193,5 +198,20 @@ public class JdbcUser {
             // print SQL exception information
         	Utils.printSQLException(e);
         }
+    }
+
+    public List<Integer> getAdmin() {
+        List<Integer> adminList = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT ID FROM Users WHERE admin=1")) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                adminList.add(resultSet.getInt("ID"));
+            }
+        } catch (SQLException e) {
+            Utils.printSQLException(e);
+        }
+        return adminList;
+
     }
 }
