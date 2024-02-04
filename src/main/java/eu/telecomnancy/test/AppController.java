@@ -47,6 +47,10 @@ public class AppController {
     private Button viewProfileButton;
     @FXML
     private Button aboutButton;
+	@FXML
+	private Button messagesButton;
+	@FXML
+	private Button notificationsButton;
 
     @FXML
     private ToggleGroup filter1;
@@ -81,8 +85,20 @@ public class AppController {
             e.printStackTrace();
         }
     }
-	
-    private void openMaterialForm( boolean isAutoSelect,boolean isRecurrent ) {
+
+	@FXML
+	public void showMessages(ActionEvent event) {
+		System.out.println("Affichage des messages sur le terminal...");
+	}
+
+	@FXML
+	public void showNotifications(ActionEvent event) {
+		System.out.println("Affichage des notifications sur le terminal...");
+		// Ajoutez ici la logique pour gérer les notifications
+	}
+
+
+	private void openMaterialForm( boolean isAutoSelect,boolean isRecurrent ) {
     	Stage secondaryStage = new Stage();
         try {
         	GenericView page;
