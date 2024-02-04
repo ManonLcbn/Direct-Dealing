@@ -25,6 +25,8 @@
    <children>
       <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addDeal" text="Déposer une annonce" />
       <Button fx:id="viewProfileButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#viewProfile" text="Mon compte" GridPane.columnIndex="2" />
+       <Button fx:id="messagesButton" mnemonicParsing="false" onAction="#showMessages" text="Messages" GridPane.rowIndex="7" />
+       <Button fx:id="notificationsButton" mnemonicParsing="false" onAction="#showNotifications" text="Notifications" GridPane.rowIndex="7" GridPane.columnIndex="1" />
       <Label styleClass="label-bright" text="Rechercher:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
       <TextField fx:id="keywords" promptText="Code postal (complet ou partiel) ou mots clés séparés par ;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
       <Button fx:id="aboutButton" disable="true" mnemonicParsing="false" onAction="#aboutDeal" text="En savoir plus..." GridPane.rowIndex="4" />
