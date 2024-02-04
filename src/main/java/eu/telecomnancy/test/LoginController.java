@@ -53,7 +53,7 @@ public class LoginController {
         JdbcUser jdbcUser = new JdbcUser();
         User user = jdbcUser.validate(emailId, password);
 
-        if ( user == null ) {
+        if ( user.getId() == 0 ) {
         	Utils.infBox("Entrez un email et un mot de passe valide", "Connexion");
         } else {
             // Ouvre la page principale

@@ -164,7 +164,7 @@
             <Insets bottom="2.0" />
          </GridPane.margin>
       </HBox>
-      <CheckBox fx:id="isAvailable" mnemonicParsing="false" text="Matériel disponible" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <CheckBox fx:id="isAvailable" onAction="#setAvailable" mnemonicParsing="false" text="Matériel disponible" GridPane.columnIndex="1" GridPane.rowIndex="13" />
    </children>
    <rowConstraints>
       <RowConstraints />

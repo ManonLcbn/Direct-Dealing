@@ -202,7 +202,7 @@
             <Insets bottom="2.0" />
          </GridPane.margin>
       </HBox>
-      <CheckBox fx:id="isAvailable" mnemonicParsing="false" text="Service disponible" GridPane.columnIndex="1" GridPane.rowIndex="12">
+      <CheckBox fx:id="isAvailable" onAction="#setAvailable" mnemonicParsing="false" text="Service disponible" GridPane.columnIndex="1" GridPane.rowIndex="12">
          <GridPane.margin>
             <Insets top="10.0" />
          </GridPane.margin>

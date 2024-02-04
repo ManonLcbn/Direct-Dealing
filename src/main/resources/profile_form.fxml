@@ -33,10 +33,9 @@
                <Insets bottom="20" left="0" right="0" top="10" />
            </GridPane.margin>
        </Label>
-       <StackPane prefHeight="150.0" onMouseEntered="#showButton" onMouseExited="#hideButton" prefWidth="200.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-           <ImageView fx:id="photoProfile" fitHeight="150.0"
-                      fitWidth="200.0" pickOnBounds="true" preserveRatio="true"/>
-           <Button fx:id="photoButton" visible="false" onAction="#addImage" mnemonicParsing="false" text="Modifier"/>
+       <StackPane maxWidth="200.0" onMouseEntered="#showButton" onMouseExited="#hideButton" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+           <ImageView fx:id="photoProfile" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+           <Button fx:id="photoButton" mnemonicParsing="false" onAction="#addImage" text="Modifier" visible="false" />
        </StackPane>
        <!-- Add Name Label -->
        <Label styleClass="label-bright" text="Nom : " GridPane.columnIndex="0" GridPane.rowIndex="2" />

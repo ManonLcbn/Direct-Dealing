@@ -25,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -74,6 +75,8 @@ public class ServiceRecurrentController {
     private DatePicker endDateField;
     @FXML
     private ComboBox<String> days;
+	@FXML
+	private CheckBox isAvailable;
 	@FXML
 	private Spinner heure;
 	@FXML
@@ -227,13 +230,15 @@ public class ServiceRecurrentController {
 		db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce\""+service.getTitle()+ "\"a été acceptée" , LocalDateTime.now()));
 		db_user.updateFlorains(firstStandby, -service.getCost());
 		db_user.updateFlorains(service.getUserId(), service.getCost());
+		isAvailable.setDisable(false);
+
 	}
 
 	@FXML
 	public void refuserReservation(ActionEvent event) throws SQLException{
 		JdbcStandby db_standby=new JdbcStandby();
 		int firstStandby=db_standby.firstStandBy(service.getId());
-		db_standby.deleteFirst(service.getId());
+		db_standby.deleteFirst(service.getId(),firstStandby);
 		JdbcMessage db_Message=new JdbcMessage();
 		db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce\""+service.getTitle()+ "\"a été refusée" ,LocalDateTime.now()));
 		if (db_standby.selectCount(service.getId())>=1){
@@ -253,6 +258,31 @@ public class ServiceRecurrentController {
 
 	}
 	
+	@FXML
+	public void setAvailable(ActionEvent event) throws SQLException{
+		isAvailable.setDisable(true);
+		JdbcStandby db_standby=new JdbcStandby();
+		int firstStandby=db_standby.firstStandBy(service.getId());
+		db_standby.deleteFirst(service.getId(),firstStandby);
+		if (db_standby.selectCount(service.getId())>=1){
+			firstStandby=db_standby.firstStandBy(service.getId());
+			JdbcUser db_user=new JdbcUser();
+			String name=(db_user.selectByID(firstStandby)).getName();
+			reservationLabel.setText(name+" veut réserver votre matériel");
+			JdbcMessage db_Message=new JdbcMessage();
+			db_Message.insert(new Message(0,firstStandby,service.getUserId(), 1, "Votre annonce \""+service.getTitle()+ "\" a été réservée" , LocalDateTime.now()));
+			db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce \""+service.getTitle()+ "\" est en cours de traitement" , LocalDateTime.now()));
+		
+		}
+		else {
+			JdbcService db_service=new JdbcService();
+			service.setIsAvailable(true);
+			db_service.update(service);
+			reservationLabel.setText(null);
+			accepterReservationButton.setVisible(false);
+			refuserReservationButton.setVisible(false);
+		}
+	}
 
     public void initPage( int userId, int serviceId, AppController appController ) throws SQLException {
 
@@ -361,16 +391,19 @@ public class ServiceRecurrentController {
 					refuserReservationButton.setVisible(false);
 				}
 				else {
+					isAvailable.setDisable(true);
 					reservationLabel.setText(name+" veut réserver votre service");
 				}
 			}
 			else {
+				isAvailable.setDisable(true);
 				reservationLabel.setText(null);
 				accepterReservationButton.setVisible(false);
 				refuserReservationButton.setVisible(false);
 			}
 		}
 		else {
+			isAvailable.setDisable(true);
 			reservationLabel.setVisible(false);
 			accepterReservationButton.setVisible(false);
 			refuserReservationButton.setVisible(false);

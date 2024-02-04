@@ -171,14 +171,11 @@ public class JdbcUser {
         int amount=0;
 
         try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID_QUERY)) {
 
             preparedStatement.setInt(1, userID);
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                amount = resultSet.getInt("FAmount");
-            }
+            amount = resultSet.getInt("FAmount");
 
         } catch (SQLException e) {
             Utils.printSQLException(e);

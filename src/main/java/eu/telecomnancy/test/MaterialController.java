@@ -319,6 +319,7 @@ public class MaterialController {
 		db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce\""+ad.getTitle()+ "\"a été acceptée" , LocalDateTime.now()));
 		db_user.updateFlorains(firstStandby, -ad.getCost());
 		db_user.updateFlorains(ad.getUserId(), ad.getCost());
+		isAvailable.setDisable(false);
 
 	}
 
@@ -326,7 +327,7 @@ public class MaterialController {
 	public void refuserReservation(ActionEvent event) throws SQLException{
 		JdbcStandby db_standby=new JdbcStandby();
 		int firstStandby=db_standby.firstStandBy(ad.getId());
-		db_standby.deleteFirst(ad.getId());
+		db_standby.deleteFirst(ad.getId(),firstStandby);
 		JdbcMessage db_Message=new JdbcMessage();
 		db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce\""+ad.getTitle()+ "\"a été refusée" , LocalDateTime.now()));
 		if (db_standby.selectCount(ad.getId())>=1){
@@ -344,6 +345,32 @@ public class MaterialController {
 			refuserReservationButton.setVisible(false);
 		}
 
+	}
+
+	@FXML
+	public void setAvailable(ActionEvent event) throws SQLException{
+		isAvailable.setDisable(true);
+		JdbcStandby db_standby=new JdbcStandby();
+		int firstStandby=db_standby.firstStandBy(ad.getId());
+		db_standby.deleteFirst(ad.getId(),firstStandby);
+		if (db_standby.selectCount(ad.getId())>=1){
+			firstStandby=db_standby.firstStandBy(ad.getId());
+			JdbcUser db_user=new JdbcUser();
+			String name=(db_user.selectByID(firstStandby)).getName();
+			reservationLabel.setText(name+" veut réserver votre matériel");
+			JdbcMessage db_Message=new JdbcMessage();
+			db_Message.insert(new Message(0,firstStandby,ad.getUserId(), 1, "Votre annonce \""+ad.getTitle()+ "\" a été réservée" , LocalDateTime.now()));
+			db_Message.insert(new Message(0,currentUserId , firstStandby, 1, "Votre réservation pour l'annonce \""+ad.getTitle()+ "\" est en cours de traitement" , LocalDateTime.now()));
+		
+		}
+		else {
+			JdbcAd db_ad=new JdbcAd();
+			ad.setIsAvailable(true);
+			db_ad.update(ad);
+			reservationLabel.setText(null);
+			accepterReservationButton.setVisible(false);
+			refuserReservationButton.setVisible(false);
+		}
 	}
 
     public void initPage( int userId, int adId, AppController appController ) throws SQLException {
@@ -526,14 +553,22 @@ public class MaterialController {
 					refuserReservationButton.setVisible(false);
 				}
 				else {
+					isAvailable.setDisable(true);
 					reservationLabel.setText(name+" veut réserver votre matériel");
 				}
 			}
 			else {
+				isAvailable.setDisable(true);
 				reservationLabel.setText(null);
 				accepterReservationButton.setVisible(false);
 				refuserReservationButton.setVisible(false);
 			}
+		}
+		else {
+			isAvailable.setDisable(true);
+			reservationLabel.setVisible(false);
+			accepterReservationButton.setVisible(false);
+			refuserReservationButton.setVisible(false);
 		}
     }
 }

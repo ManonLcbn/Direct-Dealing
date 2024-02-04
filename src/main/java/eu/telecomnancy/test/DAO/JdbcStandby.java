@@ -16,7 +16,7 @@ public class JdbcStandby {
     private static final String INSERT_QUERY = "INSERT INTO Standby (UserId,AdId,StartDateUTC,EndDateUTC) VALUES(?,?,?,?)";
     private static final String SELECT_EXIST_QUERY = "SELECT * FROM Standby WHERE UserID=? AND AdID=?";
     private static final String SELECT_FIRST_QUERY="SELECT * FROM Standby WHERE AdID=? LIMIT 1";
-    private static final String DELETE_FIRST_QUERY="DELETE * FROM Standby WHERE AdID=? LIMIT 1";
+    private static final String DELETE_FIRST_QUERY="DELETE FROM Standby WHERE AdID=? AND UserID=?";
     private static final String SELECT_ACCEPTED_FIRST_QUERY="SELECT Accepted FROM Standby WHERE AdID=? LIMIT 1";
     private static final String UPDATE_ACCEPTED_QUERY="UPDATE Standby SET Accepted=1 WHERE AdID=? AND UserID=?";
 
@@ -89,10 +89,11 @@ public class JdbcStandby {
         return first;
     }
 
-    public void deleteFirst(int adId) throws SQLException{
+    public void deleteFirst(int adId, int userID) throws SQLException{
         try (Connection connection=DriverManager.getConnection(Utils.DATABASE_URL);
             PreparedStatement preparedStatement=connection.prepareStatement(DELETE_FIRST_QUERY)){
                 preparedStatement.setInt(1,adId);
+                preparedStatement.setInt(2,userID);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
             }
