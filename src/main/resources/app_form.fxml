@@ -26,16 +26,16 @@
       <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addDeal" text="Déposer une annonce" />
       <Button fx:id="viewProfileButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#viewProfile" text="Mon compte" GridPane.columnIndex="2" />
        <Button fx:id="messagesButton" mnemonicParsing="false" onAction="#showMessages" text="Messages" GridPane.rowIndex="7" />
-       <Button fx:id="notificationsButton" mnemonicParsing="false" onAction="#showNotifications" text="Notifications" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+       <Button fx:id="notificationsButton" mnemonicParsing="false" onAction="#showNotifications" text="Notifications" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       <Label styleClass="label-bright" text="Rechercher:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
       <TextField fx:id="keywords" promptText="Code postal (complet ou partiel) ou mots clés séparés par ;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
       <Button fx:id="aboutButton" disable="true" mnemonicParsing="false" onAction="#aboutDeal" text="En savoir plus..." GridPane.rowIndex="4" />
       <TableView id="AdTableview" fx:id="annoncesTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="3">
         <columns>
-          <TableColumn fx:id="annonceRow1" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Localisation" />
-          <TableColumn fx:id="annonceRow2" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Utilisateur" />
-          <TableColumn fx:id="annonceRow3" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Type" />
-          <TableColumn fx:id="annonceRow4" maxWidth="Infinity" minWidth="450" prefWidth="120.0" text="Annonce" />
+          <TableColumn fx:id="annonceRow1" maxWidth="136.0" minWidth="100.0" prefWidth="133.0" text="Localisation" />
+          <TableColumn fx:id="annonceRow2" maxWidth="139.0" minWidth="83.0" prefWidth="136.0" text="Utilisateur" />
+          <TableColumn fx:id="annonceRow3" maxWidth="203.0" minWidth="13.0" prefWidth="57.0" text="Type" />
+          <TableColumn fx:id="annonceRow4" maxWidth="Infinity" minWidth="347.0" prefWidth="424.0" text="Annonce" />
         </columns>
       </TableView>
       <HBox spacing="10" GridPane.columnIndex="1">
@@ -57,8 +57,8 @@
       </HBox>
       <TableView fx:id="feedbackTableView" prefHeight="91.0" prefWidth="520.0" GridPane.columnSpan="3" GridPane.rowIndex="5">
         <columns>
-          <TableColumn fx:id="fbRow1" prefWidth="100.0" text="Evaluation" />
-          <TableColumn fx:id="fbRow2" prefWidth="100.0" text="Nom" />
+          <TableColumn fx:id="fbRow1" prefWidth="127.0" text="Evaluation" />
+          <TableColumn fx:id="fbRow2" prefWidth="73.0" text="Nom" />
           <TableColumn fx:id="fbRow3" prefWidth="342.0" text="Avis" />
         </columns>
       </TableView>
@@ -93,6 +93,7 @@
       <RowConstraints minHeight="10.0" />
       <RowConstraints />
       <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints />
    </rowConstraints>
  
    
