@@ -54,6 +54,10 @@ public class Message {
         return senderName;
     }
 
+    public String getRecipientName() {
+        return JdbcUser.getUserNameById(recipientID);
+    }
+
     public String getFormattedDate() {
         // Formate la date et l'heure d'envoi du message en tant que chaîne de caractères
         return dateUTC.format(DATE_TIME_FORMATTER);

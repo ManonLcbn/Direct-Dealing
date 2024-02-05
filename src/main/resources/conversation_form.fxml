@@ -16,11 +16,13 @@
         <ColumnConstraints />
     </columnConstraints>
     <children>
-        <Label text="Page de conversation (vide pour l'instant)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Button mnemonicParsing="false" text="Envoyer un message" GridPane.rowIndex="1" />
+        <Label text="Conversations" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <GridPane fx:id="conversationGridPane" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Button mnemonicParsing="false" text="Envoyer un message" GridPane.columnIndex="0" GridPane.rowIndex="2" />
     </children>
     <rowConstraints>
         <RowConstraints minHeight="-Infinity" />
         <RowConstraints minHeight="10.0" />
     </rowConstraints>
 </GridPane>
+

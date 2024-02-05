@@ -24,7 +24,7 @@ public class JdbcMessage {
 
 
     // PAS ENCORE UTILISEE
-    public List<Integer> getUsersWithMessages(int userID) throws SQLException {
+    public static List<Integer> getUsersWithMessages(int userID) throws SQLException {
         List<Integer> usersWithMessages = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
@@ -55,7 +55,7 @@ public class JdbcMessage {
     }
 
     // PAS ENCORE UTILISEE
-    public Message getLastMessageBetweenUsers(int user1ID, int user2ID) throws SQLException {
+    public static Message getLastMessageBetweenUsers(int user1ID, int user2ID) throws SQLException {
         Message lastMessage = null;
 
         try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
