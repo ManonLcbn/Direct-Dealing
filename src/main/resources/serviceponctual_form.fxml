@@ -32,26 +32,26 @@
     </columnConstraints>
    <children>
        <!-- Add Name Label -->
-       <Label text="Désignation :" GridPane.rowIndex="4" />
+       <Label styleClass="label-bright" text="Désignation :" GridPane.rowIndex="4" />
       <HBox alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
          <children>
              <!-- Add Cost Label -->
-             <Label text="Coût du service :" />
+             <Label styleClass="label-bright" text="Coût du service :" />
              <TextField fx:id="costIdField" maxWidth="70.0" />
-            <Label text="Florains" textAlignment="JUSTIFY" />
+            <Label styleClass="label-bright" text="Florains" textAlignment="JUSTIFY" />
          </children>
       </HBox>
        <!--  Add categorie Label -->
-       <Label text="Catégorie :" GridPane.rowIndex="5" />
+       <Label styleClass="label-bright" text="Catégorie :" GridPane.rowIndex="5" />
        <ComboBox fx:id="categories" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="422.0" promptText="Sélectionnez une catégorie" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5" />
        <!-- Add Description Label -->
-       <Label text="Description :" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+       <Label styleClass="label-bright" text="Description :" GridPane.rowIndex="6" GridPane.valignment="TOP" />
        <TextArea fx:id="descriptionIdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" promptText="Brève description du service" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="6" />
        <!-- Add localization TextField with label -->
-       <Label text="Code postal :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+       <Label styleClass="label-bright" text="Code postal :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
        <TextField fx:id="zipcodeField" promptText="Localisation du service" GridPane.columnIndex="1" GridPane.rowIndex="7" />
        <!-- Add comments TextArea with label -->
-       <Label text="Commentaires :" GridPane.rowIndex="8" GridPane.valignment="TOP" />
+       <Label styleClass="label-bright" text="Commentaires :" GridPane.rowIndex="8" GridPane.valignment="TOP" />
        <TextArea fx:id="commentsField" prefHeight="200.0" prefWidth="200.0" promptText="Remarques éventuelles" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="8" />
       
        <HBox alignment="CENTER" prefHeight="100.0" spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="14">
@@ -88,7 +88,7 @@
       </HBox>
        <!-- Add Name Text Field -->
        <TextField fx:id="nameIdField" promptText="Désignation du service" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="4" />
-      <Label fx:id="serviceInfo" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+      <Label styleClass="label-bright" fx:id="serviceInfo" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="14">
          <children>
             <Button fx:id="orderButton" disable="true" mnemonicParsing="false" onAction="#bookService" prefHeight="40.0" text="Réserver">
@@ -101,7 +101,7 @@
                </cursor></Button>
          </children>
       </HBox>
-      <Label text="Répétition :" GridPane.rowIndex="3" />
+      <Label styleClass="label-bright" text="Répétition :" GridPane.rowIndex="3" />
       <HBox layoutX="160.0" layoutY="88.0" spacing="30.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
          <children>
             <RadioButton mnemonicParsing="false" selected="true" text="Ponctuel">
@@ -121,7 +121,7 @@
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
          <children>
-            <Label prefHeight="26.0" prefWidth="50.0" text="Date :">
+            <Label styleClass="label-bright" prefHeight="26.0" prefWidth="50.0" text="Date :">
                <padding>
                   <Insets top="8.0" />
                </padding>
@@ -133,12 +133,12 @@
             </DatePicker>
          </children>
       </HBox>
-      <Label fx:id="reservationLabel" text="Réservation par un utilisateur" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <Label styleClass="label-bright" fx:id="reservationLabel" text="Réservation par un utilisateur" GridPane.columnIndex="1" GridPane.rowIndex="12" />
       <Button fx:id="accepterReservationButton" mnemonicParsing="false" onAction="#accepterReservation" text="Accepter" GridPane.columnIndex="4" GridPane.rowIndex="12" />
       <Button fx:id="refuserReservationButton" mnemonicParsing="false" onAction="#refuserReservation" text="Refuser" GridPane.columnIndex="5" GridPane.rowIndex="12" />
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="207.0" GridPane.columnIndex="4" GridPane.rowIndex="9">
          <children>
-            <Label prefHeight="18.0" text="Heure :">
+            <Label styleClass="label-bright" prefHeight="18.0" text="Heure :">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>

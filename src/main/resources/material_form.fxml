@@ -29,14 +29,14 @@
     </columnConstraints>
    <children>
        <!-- Add Name Label -->
-       <Label text="Désignation :" GridPane.rowIndex="3" />
+       <Label styleClass="label-bright" text="Désignation :" GridPane.rowIndex="3" />
       <HBox alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
          <children>
              <!-- Add Cost Label -->
-             <Label text="Coût du prêt :" />
+             <Label styleClass="label-bright" text="Coût du prêt :" />
             <Text fx:id="costText" strokeType="OUTSIDE" strokeWidth="0.0" />
              <TextField fx:id="costIdField" maxWidth="70.0" />
-            <Label fx:id="florainsText" text="Florains" textAlignment="JUSTIFY" />
+            <Label styleClass="label-bright" fx:id="florainsText" text="Florains" textAlignment="JUSTIFY" />
          </children>
       </HBox>
        <!--  Add categorie Label -->
@@ -44,7 +44,7 @@
        <ComboBox fx:id="categories" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="422.0" promptText="Sélectionnez une catégorie" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
       <Text fx:id="categoriesText" disable="true" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
        <!-- Add Description Label -->
-       <Label text="Description :" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+       <Label styleClass="label-bright" text="Description :" GridPane.rowIndex="5" GridPane.valignment="TOP" />
        <TextArea fx:id="descriptionIdField" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="350.0" prefHeight="150.0" prefWidth="450.0" promptText="Brève description de l'appareil" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="5" />
       <Text fx:id="descriptionText" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="450.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
       <Button fx:id="addImageButton" mnemonicParsing="false" onAction="#addImage" text="Ajouter une image" GridPane.columnIndex="4" GridPane.rowIndex="5" />
@@ -52,23 +52,23 @@
        <!-- Add available checkbox -->
        <CheckBox fx:id="isAvailable" onAction="#setAvailable" mnemonicParsing="false" text="Matériel disponible" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
        <!-- Add localization TextField with label -->
-       <Label text="Code postal :" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+       <Label styleClass="label-bright" text="Code postal :" GridPane.columnIndex="4" GridPane.rowIndex="7" />
        <TextField fx:id="zipcodeField" promptText="Localisation du matériel" GridPane.columnIndex="5" GridPane.rowIndex="7" />
       <Text fx:id="codePostalText" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7" />
        <!-- Add comments TextArea with label -->
-       <Label text="Commentaires :" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+       <Label styleClass="label-bright" text="Commentaires :" GridPane.rowIndex="7" GridPane.valignment="TOP" />
        <TextArea fx:id="commentsField" maxWidth="-Infinity" minWidth="350.0" prefHeight="200.0" prefWidth="450.0" promptText="Remarques éventuelles" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="7" />
       <Text fx:id="commentairesText" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" translateY="-20.0" visible="false" wrappingWidth="450.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
        <!-- Add start date DatePicker with label -->
-       <Label text="Disponible le :" GridPane.rowIndex="8" />
+       <Label styleClass="label-bright" text="Disponible le :" GridPane.rowIndex="8" />
        <DatePicker fx:id="startdateField" promptText="Date de disponibilité" GridPane.columnIndex="1" GridPane.rowIndex="8" />
       <Text fx:id="startDateText" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
        <!-- Add end date DatePicker with label -->
-       <Label text="jusqu'au :" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+       <Label styleClass="label-bright" text="jusqu'au :" GridPane.columnIndex="4" GridPane.rowIndex="8" />
        <DatePicker fx:id="enddateField" promptText="Fin de disponibilité" GridPane.columnIndex="5" GridPane.rowIndex="8" />
       <Text fx:id="endDateText" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="8" />
 	   <!-- Add Duration TextField with label -->
-	   <Label text="Durée du prêt:" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+	   <Label styleClass="label-bright" text="Durée du prêt:" GridPane.columnIndex="2" GridPane.rowIndex="8" />
       <HBox maxHeight="-Infinity" maxWidth="150.0" minWidth="75.0" prefHeight="50.0" prefWidth="110.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
          <children>
             <Text fx:id="nombreDeJoursText" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" visible="false">
@@ -81,7 +81,7 @@
                   <Insets top="10.0" />
                </HBox.margin>
             </TextField>
-            <Label fx:id="joursLabel" contentDisplay="TOP" text="jours" HBox.hgrow="ALWAYS">
+            <Label styleClass="label-bright" fx:id="joursLabel" contentDisplay="TOP" text="jours" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" top="13.0" />
                </HBox.margin>
@@ -127,7 +127,7 @@
          <GridPane.margin>
             <Insets />
          </GridPane.margin></Text>
-      <Label fx:id="adInfo" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+      <Label styleClass="label-bright" fx:id="adInfo" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="14">
          <children>
             <Button fx:id="orderButton" disable="true" mnemonicParsing="false" onAction="#bookMaterial" prefHeight="40.0" text="Réserver">
@@ -144,7 +144,7 @@
                  </cursor></Button>
          </children>
       </HBox>
-      <Label fx:id="reservationLabel" text="Réservation par un utilisateur" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <Label styleClass="label-bright" fx:id="reservationLabel" text="Réservation par un utilisateur" GridPane.columnIndex="1" GridPane.rowIndex="10" />
       <Button fx:id="accepterReservationButton" mnemonicParsing="false" onAction="#accepterReservation" text="Accepter" GridPane.columnIndex="4" GridPane.rowIndex="10" />
       <Button fx:id="refuserReservationButton" mnemonicParsing="false" onAction="#refuserReservation" text="Refuser" GridPane.columnIndex="5" GridPane.rowIndex="10" />
    </children>
