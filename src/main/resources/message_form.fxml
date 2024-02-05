@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="messageGrid" stylesheets="@application.css" alignment="center" hgap="10" prefHeight="700.0" prefWidth="1000.0" vgap="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.test.MessageController">
+<GridPane fx:id="messageGrid" stylesheets="@application.css" alignment="center" hgap="10" prefHeight="700.0" prefWidth="1000.0" vgap="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.telecomnancy.MessageController">
     <!-- Ajoutez ici d'autres éléments pour personnaliser la fenêtre de message -->
     <!-- Button text="Fermer" onAction="#closeMessageWindow" /-->
 

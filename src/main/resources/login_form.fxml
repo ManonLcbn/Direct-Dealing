@@ -17,7 +17,7 @@
 
 <GridPane styleClass="rootconnexion" alignment="center" hgap="10" stylesheets="@application.css" vgap="10"
           xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
-          fx:controller="eu.telecomnancy.test.LoginController">
+          fx:controller="eu.telecomnancy.LoginController">
     <padding>
         <Insets bottom="40" left="40" right="40" top="40"/>
     </padding>

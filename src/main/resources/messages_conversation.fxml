@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox fx:id="messageVBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="eu.telecomnancy.test.MessageController">
+      fx:controller="eu.telecomnancy.MessageController">
     <ListView fx:id="messageListView" prefHeight="300.0" prefWidth="400.0"/>
     <TextField fx:id="messageTextField" promptText="Entrez votre message..."/>
     <Button fx:id="sendMessageButton" text="Envoyer" onAction="#sendMessage"/>

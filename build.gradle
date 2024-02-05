@@ -24,8 +24,8 @@ java {
 }
 
 application {
-    mainModule = 'eu.telecomnancy.test'
-    mainClass = 'eu.telecomnancy.test.Main'
+    mainModule = 'eu.telecomnancy'
+    mainClass = 'eu.telecomnancy.Main'
 }
 
 jar {
