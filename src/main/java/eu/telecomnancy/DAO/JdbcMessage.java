@@ -13,6 +13,38 @@ public class JdbcMessage {
     private static final String SELECT_BETWEEN_USERS_QUERY =
             "SELECT * FROM Messages WHERE (SenderID = ? AND RecipientID = ?) OR (SenderID = ? AND RecipientID = ?) ORDER BY DateUTC";
     private static final String SELECT_MAX_ID_QUERY = "SELECT MAX(id) FROM Message";
+    private static final String SELECT_LAST_MESSAGE_QUERY =
+            "SELECT * FROM Messages WHERE (SenderID = ? AND RecipientID = ?) OR (SenderID = ? AND RecipientID = ?) ORDER BY DateUTC DESC LIMIT 1";
+
+    public Message getLastMessageBetweenUsers(int user1ID, int user2ID) throws SQLException {
+        Message lastMessage = null;
+
+        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_LAST_MESSAGE_QUERY)) {
+            preparedStatement.setInt(1, user1ID);
+            preparedStatement.setInt(2, user2ID);
+            preparedStatement.setInt(3, user2ID);
+            preparedStatement.setInt(4, user1ID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                int senderID = resultSet.getInt("SenderID");
+                int recipientID = resultSet.getInt("RecipientID");
+                int subject = resultSet.getInt("Subject");
+                String body = resultSet.getString("Body");
+                LocalDateTime dateUTC = resultSet.getTimestamp("DateUTC").toLocalDateTime();
+
+                lastMessage = new Message(id, senderID, recipientID, subject, body, dateUTC);
+            }
+        } catch (SQLException e) {
+            Utils.printSQLException(e);
+        }
+
+        return lastMessage;
+    }
+
 
     public int insert(Message message) throws SQLException {
         int messageId = 0;
