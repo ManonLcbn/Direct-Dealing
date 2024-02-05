@@ -93,9 +93,8 @@ public class AppController {
 		Stage secondaryStage = new Stage();
         try {
         	GenericView page;
-        	String Title = "TelecomNancy DirectDealing";
+        	String Title = "TelecomNancy DirectDealing - Conversations";
 			page = new ConversationView();
-			Title = " - Conversations";
         
         	
 	        GridPane root = page.loadPage(user.getId(), selectedAdId, this);
@@ -112,7 +111,23 @@ public class AppController {
 	@FXML
 	public void showNotifications(ActionEvent event) {
 		System.out.println("Affichage des notifications sur le terminal...");
-		// Ajoutez ici la logique pour gérer les notifications
+		
+		Stage secondaryStage = new Stage();
+        try {
+        	GenericView page;
+        	String Title = "TelecomNancy DirectDealing - Notifications";
+			page = new ConversationView();
+        
+        	
+	        GridPane root = page.loadPage(user.getId(), selectedAdId, this);
+			Scene scene = new Scene(root,1200,700);
+			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
+			secondaryStage.setTitle(Title);
+			secondaryStage.setScene(scene);
+			secondaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
 
