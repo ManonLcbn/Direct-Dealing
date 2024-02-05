@@ -89,6 +89,24 @@ public class AppController {
 	@FXML
 	public void showMessages(ActionEvent event) {
 		System.out.println("Affichage des messages sur le terminal...");
+
+		Stage secondaryStage = new Stage();
+        try {
+        	GenericView page;
+        	String Title = "TelecomNancy DirectDealing";
+			page = new ConversationView();
+			Title = " - Conversations";
+        
+        	
+	        GridPane root = page.loadPage(user.getId(), selectedAdId, this);
+			Scene scene = new Scene(root,1200,700);
+			scene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
+			secondaryStage.setTitle(Title);
+			secondaryStage.setScene(scene);
+			secondaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
 	@FXML
