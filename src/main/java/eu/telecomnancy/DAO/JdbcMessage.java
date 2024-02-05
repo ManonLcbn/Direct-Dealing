@@ -15,40 +15,44 @@ public class JdbcMessage {
     private static final String SELECT_MAX_ID_QUERY = "SELECT MAX(id) FROM Message";
     private static final String SELECT_LAST_MESSAGE_QUERY =
             "SELECT * FROM Messages WHERE (SenderID = ? AND RecipientID = ?) OR (SenderID = ? AND RecipientID = ?) ORDER BY DateUTC DESC LIMIT 1";
-    private static final String SELECT_DISTINCT_USERS_QUERY =
-            "SELECT DISTINCT SenderID, RecipientID FROM Messages WHERE SenderID = ? OR RecipientID = ?";
+            private static final String SELECT_DISTINCT_USERS_QUERY =
+            "SELECT DISTINCT SenderID, RecipientID, MAX(DateUTC) AS LastMessageDate " +
+            "FROM Messages " +
+            "WHERE SenderID = ? OR RecipientID = ? " +
+            "GROUP BY SenderID, RecipientID " +
+            "ORDER BY LastMessageDate DESC";
 
 
     // PAS ENCORE UTILISEE
-            public List<Integer> getUsersWithMessages(int userID) throws SQLException {
-                List<Integer> usersWithMessages = new ArrayList<>();
-        
-                try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
-                     PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DISTINCT_USERS_QUERY)) {
-                    preparedStatement.setInt(1, userID);
-                    preparedStatement.setInt(2, userID);
-        
-                    ResultSet resultSet = preparedStatement.executeQuery();
-        
-                    while (resultSet.next()) {
-                        int senderID = resultSet.getInt("SenderID");
-                        int recipientID = resultSet.getInt("RecipientID");
-        
-                        // Ajoute l'autre utilisateur à la liste, en évitant de s'ajouter lui-même
-                        if (senderID != userID) {
-                            usersWithMessages.add(senderID);
-                        }
-        
-                        if (recipientID != userID) {
-                            usersWithMessages.add(recipientID);
-                        }
-                    }
-                } catch (SQLException e) {
-                    Utils.printSQLException(e);
+    public List<Integer> getUsersWithMessages(int userID) throws SQLException {
+        List<Integer> usersWithMessages = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(Utils.DATABASE_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DISTINCT_USERS_QUERY)) {
+            preparedStatement.setInt(1, userID);
+            preparedStatement.setInt(2, userID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int senderID = resultSet.getInt("SenderID");
+                int recipientID = resultSet.getInt("RecipientID");
+
+                // Ajoute l'autre utilisateur à la liste, en évitant de s'ajouter lui-même
+                if (senderID != userID) {
+                    usersWithMessages.add(senderID);
                 }
-        
-                return usersWithMessages;
+
+                if (recipientID != userID) {
+                    usersWithMessages.add(recipientID);
+                }
             }
+        } catch (SQLException e) {
+            Utils.printSQLException(e);
+        }
+
+        return usersWithMessages;
+    }
 
     // PAS ENCORE UTILISEE
     public Message getLastMessageBetweenUsers(int user1ID, int user2ID) throws SQLException {
