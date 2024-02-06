@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 
 public class MessageView implements GenericView {
 
-    public GridPane loadPage( int userId, int adId, AppController appCtrl ) throws IOException {
+    public GridPane loadPage( int userId, int receiverId, AppController appCtrl ) throws IOException {
 
         // Charger le fichier FXML pour la page de principale de l'application
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Utils.SRC_URL + "/message_form.fxml"));
@@ -19,7 +19,7 @@ public class MessageView implements GenericView {
         MessageController controller = loader.getController();
 
         // Initialiser la page
-        controller.initPage(userId, adId);
+        controller.initPage(userId, receiverId);
 
         return root;
     }

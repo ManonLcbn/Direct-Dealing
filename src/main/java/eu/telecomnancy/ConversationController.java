@@ -2,25 +2,33 @@ package eu.telecomnancy;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
+import java.io.IOError;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import eu.telecomnancy.DAO.JdbcAd;
 import eu.telecomnancy.DAO.JdbcMessage;
 import eu.telecomnancy.base.Message;
 
 public class ConversationController {
 
     private int userID;
+    private AppController appCtrl;
 
     @FXML
     private GridPane conversationGridPane;
 
-    public void initPage(int userId) {
+    public void initPage(int userId, AppController appCtrl) {
         this.userID = userId;
+        this.appCtrl = appCtrl;
 
         // Charger et afficher les conversations avec aperçu du dernier message
         loadConversations();
@@ -80,6 +88,22 @@ public class ConversationController {
     private void handleSendMessage(int recipientId) {
         // Implémentez ici la logique pour envoyer un message au destinataire (recipientId)
         System.out.println("Sending a message to user with ID: " + recipientId);
+
+        Stage messageStage = new Stage();
+		MessageView messageView = new MessageView();
+        try{
+            int int1 = recipientId;
+			GridPane messageRoot = messageView.loadPage(userID, int1, appCtrl);
+
+		// Créez une nouvelle fenêtre pour afficher le message
+		Scene messageScene = new Scene(messageRoot, 400, 200);
+		messageScene.getStylesheets().add(getClass().getResource(Utils.SRC_URL + "/application.css").toExternalForm());
+		messageStage.setTitle("Envoyer un message");
+		messageStage.setScene(messageScene);
+		messageStage.show();
+        }
+        catch(IOException e) {
+            e.printStackTrace();}
     }
 
     @FXML

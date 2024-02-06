@@ -36,11 +36,10 @@ public class MessageController {
     public void initPage(int userId, int adId) {
         System.out.println("TEST") ;
         JdbcAd test = new JdbcAd() ;
-        int i = 1 ;
         try{
             int int1 = test.selectUserIdByID(adId) ;
             this.senderUserID = userId ;
-            this.receiverUserID = int1 ;
+            this.receiverUserID = adId ;
         }
         catch(SQLException e) {
             e.printStackTrace();}

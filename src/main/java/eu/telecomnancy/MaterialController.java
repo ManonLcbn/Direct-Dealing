@@ -114,7 +114,10 @@ public class MaterialController {
 
 		Stage messageStage = new Stage();
 		MessageView messageView = new MessageView();
-		GridPane messageRoot = messageView.loadPage(currentUserId, ad.getId(), appController);
+		JdbcAd test = new JdbcAd() ;
+        try{
+            int int1 = test.selectUserIdByID(ad.getId()) ;
+			GridPane messageRoot = messageView.loadPage(currentUserId, int1, appController);
 
 		// Créez une nouvelle fenêtre pour afficher le message
 		Scene messageScene = new Scene(messageRoot, 400, 200);
@@ -122,6 +125,9 @@ public class MaterialController {
 		messageStage.setTitle("Envoyer un message");
 		messageStage.setScene(messageScene);
 		messageStage.show();
+        }
+        catch(SQLException e) {
+            e.printStackTrace();}
 	}
 	
     @FXML

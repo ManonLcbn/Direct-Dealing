@@ -19,7 +19,7 @@ public class NotificationsView implements GenericView {
     ConversationController controller = loader.getController();
 
     // Initialiser la page 
-    controller.initPage( userId );
+    controller.initPage( userId, appCtrl );
 
     return root;
 	}
