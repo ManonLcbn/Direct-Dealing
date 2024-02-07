@@ -32,4 +32,9 @@ public class Signalement {
         this.id = id;
         this.description.set(description);
     }
+
+    @Override
+    public String toString() {
+        return this.description.get();
+    }
 }

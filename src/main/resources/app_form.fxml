@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -79,11 +80,7 @@
             </RadioButton>
          </children>
       </HBox>
-      <TableView fx:id="signalementTableView" layoutX="30.0" layoutY="406.0" minWidth="-Infinity" prefHeight="150.0" prefWidth="520.0" GridPane.columnSpan="3" GridPane.rowIndex="6">
-         <columns>
-            <TableColumn fx:id="contenuSignalement" prefWidth="514.5" text="Signalements" />
-         </columns>
-      </TableView>
+      <ListView fx:id="listeSignalements" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="6" />
    </children>
    <rowConstraints>
       <RowConstraints minHeight="-Infinity" />

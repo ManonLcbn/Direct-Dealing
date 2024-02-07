@@ -17,13 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -65,9 +59,7 @@ public class AppController {
     @FXML
     private TableColumn<Feedback,String> fbRow1, fbRow2, fbRow3;
 	@FXML
-	private TableView<Signalement> signalementTableView;
-	@FXML
-	private TableColumn<Signalement, String> contenuSignalement;
+	private ListView<Signalement> listeSignalements;
     
     @FXML
     public void viewProfile(ActionEvent event) {
@@ -280,17 +272,17 @@ public class AppController {
             }
         });
 
-		List<Signalement> signalements = db_signalement.selectAll();
-		signalementTableView.setItems(FXCollections.observableArrayList(signalements));
-		contenuSignalement.setCellValueFactory(new PropertyValueFactory<Signalement, String>("description"));
-		signalementTableView.setVisible(user.getAdmin() == 1);
+		listeSignalements.setVisible(user.getAdmin() == 1);
+		if (user.getAdmin() == 1){
+			List<Signalement> signalements=db_signalement.selectAll();
+			listeSignalements.setItems(FXCollections.observableArrayList(signalements));
+		}
 
 
 
 
 		Bindings.bindBidirectional(annoncesTableView.itemsProperty(), annonceRowsProperty);
     	Bindings.bindBidirectional(feedbackTableView.itemsProperty(), feedbackRowsProperty);
-		Bindings.bindBidirectional(signalementTableView.itemsProperty(), new SimpleObjectProperty<>(FXCollections.observableArrayList(signalements)));
 
     }
     
