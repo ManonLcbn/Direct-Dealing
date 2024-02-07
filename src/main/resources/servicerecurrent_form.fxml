@@ -68,13 +68,13 @@
        <Label styleClass="label-bright" text="Description :" GridPane.rowIndex="6" GridPane.valignment="TOP" />
        <TextArea fx:id="descriptionIdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" promptText="Brève description du service" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="6" />
        <!-- Add localization TextField with label -->
-       <Label styleClass="label-bright" text="Code postal :" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-       <TextField fx:id="zipcodeField" promptText="Localisation du service" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+       <Label styleClass="label-bright" text="Code postal :" GridPane.rowIndex="8" />
+       <TextField fx:id="zipcodeField" promptText="Localisation du service" GridPane.columnIndex="1" GridPane.rowIndex="8" />
        <!-- Add comments TextArea with label -->
-       <Label styleClass="label-bright" text="Commentaires :" GridPane.rowIndex="8" GridPane.valignment="TOP" />
-       <TextArea fx:id="commentsField" prefHeight="200.0" prefWidth="200.0" promptText="Remarques éventuelles" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="8" />
+       <Label styleClass="label-bright" text="Commentaires :" GridPane.rowIndex="9" GridPane.valignment="TOP" />
+       <TextArea fx:id="commentsField" prefHeight="200.0" prefWidth="200.0" promptText="Remarques éventuelles" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="NEVER" GridPane.rowIndex="9" />
       
-       <HBox alignment="CENTER" prefHeight="80.0" spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="14">
+       <HBox alignment="CENTER" prefHeight="80.0" spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="15">
          <children>
          	<!-- Add Button -->
              <Button fx:id="addButton" defaultButton="true" onAction="#addService" prefHeight="40" text="Enregistrer">
@@ -108,8 +108,8 @@
       </HBox>
        <!-- Add Name Text Field -->
        <TextField fx:id="nameIdField" promptText="Désignation du service" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="4" />
-      <Label styleClass="label-bright" fx:id="serviceInfo" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="14">
+      <Label fx:id="serviceInfo" styleClass="label-bright" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="15">
          <children>
             <Button fx:id="orderButton" disable="true" mnemonicParsing="false" onAction="#bookService" prefHeight="40.0" text="Réserver">
                <cursor>
@@ -121,9 +121,9 @@
                </cursor></Button>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
          <children>
-            <Label styleClass="label-bright" prefHeight="26.0" prefWidth="50.0" text="Du :">
+            <Label prefHeight="26.0" prefWidth="50.0" styleClass="label-bright" text="Du :">
                <padding>
                   <Insets top="8.0" />
                </padding>
@@ -135,9 +135,9 @@
             </DatePicker>
          </children>
       </HBox>
-      <HBox layoutX="494.0" layoutY="434.0" prefHeight="100.0" GridPane.columnIndex="4" GridPane.rowIndex="9">
+      <HBox layoutX="494.0" layoutY="434.0" prefHeight="100.0" GridPane.columnIndex="4" GridPane.rowIndex="10">
          <children>
-            <Label styleClass="label-bright" prefHeight="26.0" text="Jusqu'au :">
+            <Label prefHeight="26.0" styleClass="label-bright" text="Jusqu'au :">
                <padding>
                   <Insets top="8.0" />
                </padding>
@@ -149,13 +149,9 @@
             </DatePicker>
          </children>
       </HBox>
-      <HBox layoutX="704.0" layoutY="472.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="207.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
+      <HBox layoutX="704.0" layoutY="472.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="207.0" GridPane.columnIndex="5" GridPane.rowIndex="8">
          <children>
-            <Label styleClass="label-bright" prefHeight="18.0" prefWidth="43.0" text="Jour :">
-               <HBox.margin>
-                  <Insets top="8.0" />
-               </HBox.margin>
-            </Label>
+            <Label prefHeight="35.0" prefWidth="60.0" styleClass="label-bright" text="Jour :" />
             <ComboBox fx:id="days" prefWidth="150.0" promptText="Sélectionnez un jour">
                <items>
                   <FXCollections fx:factory="observableArrayList">
@@ -174,13 +170,9 @@
             </ComboBox>
          </children>
       </HBox>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" GridPane.columnIndex="4" GridPane.rowIndex="11">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" GridPane.columnIndex="5" GridPane.rowIndex="10">
          <children>
-            <Label styleClass="label-bright" prefHeight="18.0" text="Heure :">
-               <HBox.margin>
-                  <Insets top="8.0" />
-               </HBox.margin>
-            </Label>
+            <Label prefHeight="18.0" styleClass="label-bright" text="Heure :" />
             <Spinner fx:id="heure" editable="true" prefHeight="37.0" prefWidth="61.0">
                <valueFactory>
                   <SpinnerValueFactory.IntegerSpinnerValueFactory max="23" min="0" />
@@ -202,13 +194,13 @@
             <Insets bottom="2.0" />
          </GridPane.margin>
       </HBox>
-      <CheckBox fx:id="isAvailable" onAction="#setAvailable" mnemonicParsing="false" text="Service disponible" GridPane.columnIndex="1" GridPane.rowIndex="12">
+      <CheckBox fx:id="isAvailable" mnemonicParsing="false" onAction="#setAvailable" text="Service disponible" GridPane.columnIndex="5" GridPane.rowIndex="6">
          <GridPane.margin>
             <Insets top="10.0" />
          </GridPane.margin>
       </CheckBox>
-      <Label styleClass="label-bright" fx:id="reservationLabel" text="Réservation par un utilisateur" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-      <Button fx:id="accepterReservationButton" mnemonicParsing="false" onAction="#accepterReservation" text="Accepter" GridPane.columnIndex="4" GridPane.rowIndex="13">
+      <Label fx:id="reservationLabel" styleClass="label-bright" text="Réservation par un utilisateur" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+      <Button fx:id="accepterReservationButton" mnemonicParsing="false" onAction="#accepterReservation" text="Accepter" GridPane.columnIndex="4" GridPane.rowIndex="14">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -216,7 +208,7 @@
             <Insets top="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="refuserReservationButton" mnemonicParsing="false" onAction="#refuserReservation" text="Refuser" GridPane.columnIndex="5" GridPane.rowIndex="13">
+      <Button fx:id="refuserReservationButton" mnemonicParsing="false" onAction="#refuserReservation" text="Refuser" GridPane.columnIndex="5" GridPane.rowIndex="14">
          <GridPane.margin>
             <Insets top="10.0" />
          </GridPane.margin>
@@ -229,6 +221,7 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints maxHeight="150.0" minHeight="-Infinity" />
+      <RowConstraints maxHeight="116.0" minHeight="-Infinity" />
       <RowConstraints maxHeight="116.0" minHeight="-Infinity" />
       <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" />
       <RowConstraints maxHeight="46.0" minHeight="-Infinity" />

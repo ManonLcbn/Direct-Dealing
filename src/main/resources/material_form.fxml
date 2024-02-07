@@ -36,7 +36,7 @@
              <Label styleClass="label-bright" text="Coût du prêt :" />
             <Text fx:id="costText" strokeType="OUTSIDE" strokeWidth="0.0" />
              <TextField fx:id="costIdField" maxWidth="70.0" />
-            <Label styleClass="label-bright" fx:id="florainsText" text="Florains" textAlignment="JUSTIFY" />
+            <Label fx:id="florainsText" styleClass="label-bright" text="Florains" textAlignment="JUSTIFY" />
          </children>
       </HBox>
        <!--  Add categorie Label -->
@@ -50,7 +50,7 @@
       <Button fx:id="addImageButton" mnemonicParsing="false" onAction="#addImage" text="Ajouter une image" GridPane.columnIndex="4" GridPane.rowIndex="5" />
       <ImageView fx:id="productImage" fitHeight="150.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="5" />
        <!-- Add available checkbox -->
-       <CheckBox fx:id="isAvailable" onAction="#setAvailable" mnemonicParsing="false" text="Matériel disponible" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
+       <CheckBox fx:id="isAvailable" mnemonicParsing="false" onAction="#setAvailable" text="Matériel disponible" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
        <!-- Add localization TextField with label -->
        <Label styleClass="label-bright" text="Code postal :" GridPane.columnIndex="4" GridPane.rowIndex="7" />
        <TextField fx:id="zipcodeField" promptText="Localisation du matériel" GridPane.columnIndex="5" GridPane.rowIndex="7" />
@@ -69,19 +69,19 @@
       <Text fx:id="endDateText" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="8" />
 	   <!-- Add Duration TextField with label -->
 	   <Label styleClass="label-bright" text="Durée du prêt:" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-      <HBox maxHeight="-Infinity" maxWidth="150.0" minWidth="75.0" prefHeight="50.0" prefWidth="110.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
+      <HBox maxHeight="-Infinity" minWidth="75.0" prefHeight="48.0" prefWidth="108.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
          <children>
             <Text fx:id="nombreDeJoursText" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" visible="false">
                <HBox.margin>
                   <Insets top="15.0" />
                </HBox.margin>
             </Text>
-             <TextField fx:id="durationField" prefWidth="40.0" promptText="nb">
+             <TextField fx:id="durationField" prefWidth="47.0" promptText="nb">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
             </TextField>
-            <Label styleClass="label-bright" fx:id="joursLabel" contentDisplay="TOP" text="jours" HBox.hgrow="ALWAYS">
+            <Label fx:id="joursLabel" contentDisplay="TOP" prefHeight="35.0" prefWidth="37.0" styleClass="label-bright" stylesheets="@application.css" text="j" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="5.0" top="13.0" />
                </HBox.margin>
@@ -127,7 +127,7 @@
          <GridPane.margin>
             <Insets />
          </GridPane.margin></Text>
-      <Label styleClass="label-bright" fx:id="adInfo" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+      <Label fx:id="adInfo" styleClass="label-header" text="Information sur votre annonce" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="14">
          <children>
             <Button fx:id="orderButton" disable="true" mnemonicParsing="false" onAction="#bookMaterial" prefHeight="40.0" text="Réserver">
@@ -144,7 +144,7 @@
                  </cursor></Button>
          </children>
       </HBox>
-      <Label styleClass="label-bright" fx:id="reservationLabel" text="Réservation par un utilisateur" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <Label fx:id="reservationLabel" styleClass="label-bright" text="Réservation par un utilisateur" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10" />
       <Button fx:id="accepterReservationButton" mnemonicParsing="false" onAction="#accepterReservation" text="Accepter" GridPane.columnIndex="4" GridPane.rowIndex="10" />
       <Button fx:id="refuserReservationButton" mnemonicParsing="false" onAction="#refuserReservation" text="Refuser" GridPane.columnIndex="5" GridPane.rowIndex="10" />
    </children>
