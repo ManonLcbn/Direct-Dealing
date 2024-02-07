@@ -41,10 +41,19 @@ public class ConversationController {
             // Obtenez la liste des utilisateurs avec qui l'utilisateur a échangé des messages
             List<Integer> usersWithMessages = JdbcMessage.getUsersWithMessages(userID);
 
+            System.out.println("usersWithMessages contient :") ;
+            for(int i=0; i<usersWithMessages.size(); i++){
+                System.out.println(usersWithMessages.get(i)) ;
+            }
+            System.out.println("Voilà !") ;
+
             int rowIndex = 0;
             for (int otherUserId : usersWithMessages) {
                 // Obtenez le dernier message de la conversation
+                System.out.println(otherUserId) ;
                 Message lastMessage = JdbcMessage.getLastMessageBetweenUsers(userID, otherUserId);
+
+                System.out.println(lastMessage.getBody()) ;
 
                 if (lastMessage != null) {
                     // Créez des Labels pour afficher le nom de l'utilisateur et le dernier message

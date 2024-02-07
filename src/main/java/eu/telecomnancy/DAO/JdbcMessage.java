@@ -4,6 +4,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedHashSet ;
 
 import eu.telecomnancy.Utils;
 import eu.telecomnancy.base.* ;
@@ -51,7 +52,12 @@ public class JdbcMessage {
             Utils.printSQLException(e);
         }
 
-        return usersWithMessages;
+        return removeDuplicates(usersWithMessages);
+    }
+
+    public static <T> List<T> removeDuplicates(List<T> listWithDuplicates) {
+        LinkedHashSet<T> set = new LinkedHashSet<>(listWithDuplicates);
+        return new ArrayList<>(set);
     }
 
     // PAS ENCORE UTILISEE
