@@ -65,11 +65,17 @@ public class ConversationController {
                     }
                     Label userNameLabel = new Label(NomEnGras);
                     userNameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14pt;");
+                    userNameLabel.getStyleClass().add("label-hover");
+
+                    final int finalRowIndex = rowIndex;
+
+                    // Ajouter un événement de survol sur le nom de l'utilisateur
+                    userNameLabel.setOnMouseEntered(event -> handleMouseEnter(finalRowIndex));
+                    userNameLabel.setOnMouseExited(event -> handleMouseExit(finalRowIndex));
+                    conversationGridPane.add(userNameLabel, 0, rowIndex);
 
                     // Ajouter un événement de clic sur le nom de l'utilisateur
                     userNameLabel.setOnMouseClicked(event -> handleSendMessage(otherUserId));
-
-                    conversationGridPane.add(userNameLabel, 0, rowIndex);
 
                     if(lastMessage.getSender() == userID) {
                         lastMessage.setBody("Vous : " + lastMessage.getBody());
@@ -81,7 +87,12 @@ public class ConversationController {
                         lastMessage.setBody(lastMessage.getBody().substring(0, 300) + "...");
                     }
                     Label lastMessageLabel = new Label(lastMessage.getBody());
+                    lastMessageLabel.getStyleClass().add("message-hover");
+                    // Ajouter un événement de survol sur le dernier message
+                    lastMessageLabel.setOnMouseEntered(event -> handleMouseEnter(finalRowIndex + 1));
+                    lastMessageLabel.setOnMouseExited(event -> handleMouseExit(finalRowIndex + 1));
                     conversationGridPane.add(lastMessageLabel, 0, rowIndex + 1);
+
 
                     // Ajouter un événement de clic sur le dernier message
                     lastMessageLabel.setOnMouseClicked(event -> handleSendMessage(otherUserId));
@@ -92,6 +103,16 @@ public class ConversationController {
         } catch (SQLException e) {
             e.printStackTrace(); // Gérez les erreurs SQL de manière appropriée
         }
+    }
+
+    private void handleMouseEnter(int rowIndex) {
+        conversationGridPane.getChildren().get(rowIndex).getStyleClass().add("label-hover");
+        conversationGridPane.getChildren().get(rowIndex + 1).getStyleClass().add("message-hover");
+    }
+    
+    private void handleMouseExit(int rowIndex) {
+        conversationGridPane.getChildren().get(rowIndex).getStyleClass().remove("label-hover");
+        conversationGridPane.getChildren().get(rowIndex + 1).getStyleClass().remove("message-hover");
     }
 
     private void handleSendMessage(int recipientId) {

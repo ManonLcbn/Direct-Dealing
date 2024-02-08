@@ -235,3 +235,16 @@
 .check-box:indeterminate  > .box > .mark {
 	-fx-background-color: rgba(40,93,30,1);
 }
+
+.label-hover:hover {
+    -fx-background-color: #800080;
+}
+
+.message-hover:hover {
+    -fx-background-color: #800080;
+}
+
+.label-bold-hover:hover {
+    -fx-font-weight: bold;
+    -fx-background-color: #800080;
+}
